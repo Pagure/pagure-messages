@@ -39,6 +39,7 @@ def test_minimal():
                 "fullname": "dummy-user",
                 "url_path": "user/dummy-user",
                 "name": "dummy-user",
+                "email": None,
             }
         ],
         "total_commits": 42,
@@ -63,8 +64,9 @@ def test_minimal_short_branch():
         "authors": [
             {
                 "fullname": "dummy-user",
-                "url_path": "user/dummy-user",
-                "name": "dummy-user",
+                "url_path": None,
+                "name": None,
+                "email": "dummy-user@example.com",
             }
         ],
         "total_commits": 42,
@@ -88,6 +90,7 @@ def test_missing_fields():
                 "fullname": "dummy-user",
                 "url_path": "user/dummy-user",
                 "name": "dummy-user",
+                "email": None,
             }
         ],
         "total_commits": 42,
@@ -112,6 +115,7 @@ def test_str():
                 "fullname": "dummy-user",
                 "url_path": "user/dummy-user",
                 "name": "dummy-user",
+                "email": None,
             }
         ],
         "total_commits": 42,
@@ -137,6 +141,7 @@ def test_summary():
                 "fullname": "dummy-user",
                 "url_path": "user/dummy-user",
                 "name": "dummy-user",
+                "email": None,
             }
         ],
         "total_commits": 42,

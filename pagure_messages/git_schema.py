@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from .base import PROJECT, PagureMessage, SCHEMA_URL, USER
+from .base import GIT_RECEIVE_USER, PROJECT, PagureMessage, SCHEMA_URL
 
 
 class GitBranchCreationV1(PagureMessage):
@@ -136,7 +136,7 @@ class GitReceiveV1(PagureMessage):
             "repo": PROJECT,
             "old_commit": {"type": "string"},
             "branch": {"type": "string"},
-            "authors": {"type": "array", "items": USER},
+            "authors": {"type": "array", "items": GIT_RECEIVE_USER},
             "total_commits": {"type": "number"},
             "start_commit": {"type": "string"},
             "end_commit": {"type": "string"},
