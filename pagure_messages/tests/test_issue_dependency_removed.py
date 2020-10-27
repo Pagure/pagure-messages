@@ -32,7 +32,7 @@ def test_minimal():
         "agent": "dummy-user",
         "project": PROJECT,
         "issue": ISSUE,
-        "removed_dependency": 8912,
+        "removed_dependency": [8912],
     }
     message = IssueDependencyRemovedV1(body=body)
     message.validate()
@@ -44,7 +44,7 @@ def test_missing_fields():
     minimal_message = {
         "project": PROJECT,
         "issue": ISSUE,
-        "removed_dependency": 8912,
+        "removed_dependency": [8912],
     }
     message = IssueDependencyRemovedV1(body=minimal_message)
     with pytest.raises(ValidationError):
@@ -57,7 +57,7 @@ def test_str():
         "agent": "dummy-user",
         "project": PROJECT,
         "issue": ISSUE,
-        "removed_dependency": 8912,
+        "removed_dependency": [8912],
     }
     expected_str = (
         "Issue: fedora-infra/fedocal-messages#9311 no longer depending "
@@ -74,7 +74,7 @@ def test_summary():
         "agent": "dummy-user",
         "project": PROJECT,
         "issue": ISSUE,
-        "removed_dependency": 8912,
+        "removed_dependency": [8912],
     }
     expected_summary = (
         "dummy-user removed the dependency on #8912 on the issue "

@@ -251,7 +251,7 @@ ISSUE = {
         "milestone": {
             "oneOf": [
                 {"type": "null"},
-                MILESTONES,
+                {"type": "string"},
             ]
         },
         "custom_fields": {
@@ -308,7 +308,7 @@ PULL_REQUEST = {
         "commit_start": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "commit_stop": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "closed_by": {"oneOf": [{"type": "null"}, USER]},
-        "initial_comment": {"type": "string"},
+        "initial_comment": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "cached_merge_status": {"type": "string"},
         "threshold_reached": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "tags": {"type": "array", "items": {"type": "string"}},
@@ -395,7 +395,7 @@ PULL_REQUEST_FLAG = {
     "properties": {
         "pull_request_uid": {"type": "string"},
         "username": {"type": "string"},
-        "percent": {"type": "string"},
+        "percent": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "comment": {"type": "string"},
         "status": {"type": "string"},
         "url": {"type": "string"},

@@ -234,7 +234,7 @@ class IssueDependencyRemovedV1(PagureMessage):
             "agent": {"type": "string"},
             "project": PROJECT,
             "issue": ISSUE,
-            "removed_dependency": {"type": "number"},
+            "removed_dependency": {"type": "array", "items": {"type": "number"}},
         },
         "required": ["agent", "project", "removed_dependency"],
     }
@@ -245,7 +245,7 @@ class IssueDependencyRemovedV1(PagureMessage):
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             agent=self.body["agent"],
-            depissueid=self.body["removed_dependency"],
+            depissueid=", #".join([str(i) for i in self.body["removed_dependency"]]),
         )
 
     @property
@@ -255,7 +255,7 @@ class IssueDependencyRemovedV1(PagureMessage):
             agent=self.body["agent"],
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            depissueid=self.body["removed_dependency"],
+            depissueid=", #".join([str(i) for i in self.body["removed_dependency"]]),
         )
 
     @property
