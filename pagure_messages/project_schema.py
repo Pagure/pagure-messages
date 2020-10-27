@@ -265,7 +265,7 @@ class ProjectGroupRemovedV1(PagureMessage):
     def summary(self):
         """Return a summary of the message."""
         return (
-            '{agent} removed the group {group} (with {access} level)  from the '
+            "{agent} removed the group {group} (with {access} level)  from the "
             'project "{name}"'.format(
                 agent=self.body["agent"],
                 group=self.body["new_group"],

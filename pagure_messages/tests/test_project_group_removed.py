@@ -73,7 +73,7 @@ def test_summary():
         "access": "commit",
     }
     expected_summary = (
-        'dummy-user removed the group dummy-group (with commit level)  from '
+        "dummy-user removed the group dummy-group (with commit level)  from "
         'the project "fedora-infra/fedocal-messages"'
     )
     message = ProjectGroupRemovedV1(body=body)
