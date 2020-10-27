@@ -50,6 +50,7 @@ from .project_schema import (  # noqa: F401
     ProjectForkedV1,
     ProjectGroupAccessUpdatedV1,
     ProjectGroupAddedV1,
+    ProjectGroupRemovedV1,
     ProjectNewV1,
     ProjectTagEditedV1,
     ProjectTagRemovedV1,

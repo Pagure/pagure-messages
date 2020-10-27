@@ -231,6 +231,58 @@ class ProjectGroupAddedV1(PagureMessage):
         return tmpl.format(base_url=base_url, fullname=fullname)
 
 
+class ProjectGroupRemovedV1(PagureMessage):
+    """
+    A sub-class of a Fedora message that defines a message schema for messages
+    published by pagure when a new thing is created.
+    """
+
+    topic = "pagure.project.group.removed"
+
+    body_schema = {
+        "id": SCHEMA_URL + topic,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Schema for messages sent when a new project is created",
+        "type": "object",
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+            "removed_groups": {"type": "array", "items": {"type": "string"}},
+        },
+        "required": ["agent", "project"],
+    }
+
+    def __str__(self):
+        """Return a complete human-readable representation of the message."""
+        return "Group: {group} removed from {fullname}({access})\nBy: {agent}".format(
+            fullname=self.body["project"]["fullname"],
+            group=self.body["new_group"],
+            access=self.body["access"],
+            agent=self.body["agent"],
+        )
+
+    @property
+    def summary(self):
+        """Return a summary of the message."""
+        return (
+            '{agent} removed the group {group} (with {access} level)  from the '
+            'project "{name}"'.format(
+                agent=self.body["agent"],
+                group=self.body["new_group"],
+                access=self.body["access"],
+                name=self.body["project"]["fullname"],
+            )
+        )
+
+    @property
+    def url(self):
+        base_url = self.get_base_url()
+        fullname = self.body["project"]["url_path"]
+
+        tmpl = "{base_url}/{fullname}"
+        return tmpl.format(base_url=base_url, fullname=fullname)
+
+
 class ProjectGroupAccessUpdatedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
