@@ -63,6 +63,7 @@ from .pull_requests_schema import (  # noqa: F401
     PullRequestAssignedResetV1,
     PullRequestClosedV1,
     PullRequestCommentAddedV1,
+    PullRequestCommentEditedV1,
     PullRequestFlagAddedV1,
     PullRequestFlagUpdatedV1,
     PullRequestInitialCommentEditedV1,

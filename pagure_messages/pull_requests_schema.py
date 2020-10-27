@@ -214,6 +214,56 @@ class PullRequestCommentAddedV1(PagureMessage):
         )
 
 
+class PullRequestCommentEditedV1(PagureMessage):
+    """
+    A sub-class of a Fedora message that defines a message schema for messages
+    published by pagure when a new thing is created.
+    """
+
+    topic = "pagure.pull-request.comment.edited"
+
+    body_schema = {
+        "id": SCHEMA_URL + topic,
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Schema for messages sent when a new project is created",
+        "type": "object",
+        "properties": {
+            "agent": {"type": "string"},
+            "pullrequest": PULL_REQUEST,
+        },
+        "required": ["agent", "pullrequest"],
+    }
+
+    def __str__(self):
+        """Return a complete human-readable representation of the message."""
+        return "Edited comment on Pull-Request: {fullname}#{id}\nBy: {agent}".format(
+            fullname=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
+            agent=self.body["agent"],
+        )
+
+    @property
+    def summary(self):
+        """Return a summary of the message."""
+        return "{agent} edited comment on the pull-request {name}#{id}".format(
+            agent=self.body["agent"],
+            name=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
+        )
+
+    @property
+    def url(self):
+        base_url = self.get_base_url()
+        fullname = self.body["pullrequest"]["project"]["url_path"]
+        prid = self.body["pullrequest"]["id"]
+        commentid = self.body["pullrequest"]["comments"][-1]["id"]
+
+        tmpl = "{base_url}/{fullname}/pull-request/{prid}#comment-{commentid}"
+        return tmpl.format(
+            base_url=base_url, fullname=fullname, prid=prid, commentid=commentid
+        )
+
+
 class PullRequestFlagAddedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
