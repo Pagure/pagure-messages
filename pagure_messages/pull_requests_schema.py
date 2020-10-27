@@ -23,7 +23,7 @@ class PullRequestAssignedAddedV1(PagureMessage):
     published by pagure when a new thing is created.
     """
 
-    topic = "pagure.request.assigned.added"
+    topic = "pagure.pull-request.assigned.added"
 
     body_schema = {
         "id": SCHEMA_URL + topic,
@@ -32,35 +32,35 @@ class PullRequestAssignedAddedV1(PagureMessage):
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
-            "request": PULL_REQUEST,
+            "pullrequest": PULL_REQUEST,
             "project": PROJECT,
         },
-        "required": ["agent", "request", "project"],
+        "required": ["agent", "pullrequest", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
         return "Pull-request {name}#{id} was assigned\nBy: {agent}".format(
             agent=self.body["agent"],
-            name=self.body["request"]["project"]["fullname"],
-            id=self.body["request"]["id"],
+            name=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return "{username} assigned the pull-request {name}#{id} to {assignee}".format(
-            name=self.body["request"]["project"]["fullname"],
-            id=self.body["request"]["id"],
+            name=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
             username=self.body["agent"],
-            assignee=self.body["request"]["assignee"]["name"],
+            assignee=self.body["pullrequest"]["assignee"]["name"],
         )
 
     @property
     def url(self):
         base_url = self.get_base_url()
-        fullname = self.body["request"]["project"]["url_path"]
-        prid = self.body["request"]["id"]
+        fullname = self.body["pullrequest"]["project"]["url_path"]
+        prid = self.body["pullrequest"]["id"]
 
         tmpl = "{base_url}/{fullname}/pull-request/{prid}"
         return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
@@ -72,7 +72,7 @@ class PullRequestAssignedResetV1(PagureMessage):
     published by pagure when a new thing is created.
     """
 
-    topic = "pagure.request.assigned.reset"
+    topic = "pagure.pull-request.assigned.reset"
 
     body_schema = {
         "id": SCHEMA_URL + topic,
@@ -81,26 +81,26 @@ class PullRequestAssignedResetV1(PagureMessage):
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
-            "request": PULL_REQUEST,
+            "pullrequest": PULL_REQUEST,
             "project": PROJECT,
         },
-        "required": ["agent", "request", "project"],
+        "required": ["agent", "pullrequest", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
         return "Pull-request {name}#{id} was un-assigned\nBy: {agent}".format(
             agent=self.body["agent"],
-            name=self.body["request"]["project"]["fullname"],
-            id=self.body["request"]["id"],
+            name=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return "{username} reset the assignee of the pull-request {name}#{id}".format(
-            name=self.body["request"]["project"]["fullname"],
-            id=self.body["request"]["id"],
+            name=self.body["pullrequest"]["project"]["fullname"],
+            id=self.body["pullrequest"]["id"],
             username=self.body["agent"],
         )
 
@@ -108,7 +108,7 @@ class PullRequestAssignedResetV1(PagureMessage):
     def url(self):
         base_url = self.get_base_url()
         fullname = self.body["project"]["url_path"]
-        prid = self.body["request"]["id"]
+        prid = self.body["pullrequest"]["id"]
 
         tmpl = "{base_url}/{fullname}/pull-request/{prid}"
         return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)

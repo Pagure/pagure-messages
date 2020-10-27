@@ -30,7 +30,7 @@ def test_minimal():
     """
     body = {
         "agent": "dummy-user",
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     message = PullRequestAssignedResetV1(body=body)
@@ -44,7 +44,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     message = PullRequestAssignedResetV1(body=minimal_message)
@@ -56,7 +56,7 @@ def test_str():
     """Assert __str__ produces a human-readable message."""
     body = {
         "agent": "dummy-user",
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     expected_str = "Pull-request pagure#5014 was un-assigned\nBy: dummy-user"
@@ -69,7 +69,7 @@ def test_summary():
     """Assert the summary is correct."""
     body = {
         "agent": "dummy-user",
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     expected_summary = "dummy-user reset the assignee of the pull-request pagure#5014"

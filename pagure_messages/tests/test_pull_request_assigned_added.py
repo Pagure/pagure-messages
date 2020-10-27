@@ -30,7 +30,7 @@ def test_minimal():
     """
     body = {
         "agent": "dummy-user",
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     message = PullRequestAssignedAddedV1(body=body)
@@ -41,7 +41,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     message = PullRequestAssignedAddedV1(body=minimal_message)
@@ -53,7 +53,7 @@ def test_str():
     """Assert __str__ produces a human-readable message."""
     body = {
         "agent": "dummy-user",
-        "request": PULL_REQUEST,
+        "pullrequest": PULL_REQUEST,
         "project": PROJECT,
     }
     expected_str = "Pull-request pagure#5014 was assigned\nBy: dummy-user"
@@ -72,7 +72,7 @@ def test_summary():
     }
     body = {
         "agent": "dummy-user",
-        "request": request,
+        "pullrequest": request,
         "project": PROJECT,
     }
     expected_summary = "dummy-user assigned the pull-request pagure#5014 to foobar"
