@@ -59,12 +59,7 @@ class IssueAssignedAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueAssignedResetV1(PagureMessage):
@@ -107,12 +102,7 @@ class IssueAssignedResetV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueCommentAddedV1(PagureMessage):
@@ -155,14 +145,11 @@ class IssueCommentAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
+        issue_url = self.body["issue"]["full_url"]
         commentid = self.body["issue"]["comments"][-1]["id"]
 
-        tmpl = "{base_url}/{fullname}/issue/{issueid}#comment-{commentid}"
-        return tmpl.format(
-            base_url=base_url, fullname=fullname, issueid=issueid, commentid=commentid
+        return "{issue_url}#comment-{commentid}".format(
+            issue_url=issue_url, commentid=commentid
         )
 
 
@@ -209,12 +196,7 @@ class IssueDependencyAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueDependencyRemovedV1(PagureMessage):
@@ -260,12 +242,7 @@ class IssueDependencyRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueDropV1(PagureMessage):
@@ -309,11 +286,9 @@ class IssueDropV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
+        full_url = self.body["project"]["full_url"]
 
-        tmpl = "{base_url}/{fullname}/issues"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return "{full_url}/issues".format(full_url=full_url)
 
 
 class IssueEditV1(PagureMessage):
@@ -359,12 +334,7 @@ class IssueEditV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueNewV1(PagureMessage):
@@ -408,12 +378,7 @@ class IssueNewV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueTagAddedV1(PagureMessage):
@@ -459,12 +424,7 @@ class IssueTagAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["issue"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]
 
 
 class IssueTagRemovedV1(PagureMessage):
@@ -510,9 +470,4 @@ class IssueTagRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        issueid = self.body["project"]["id"]
-
-        tmpl = "{base_url}/{fullname}/issue/{issueid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, issueid=issueid)
+        return self.body["issue"]["full_url"]

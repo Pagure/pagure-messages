@@ -35,7 +35,7 @@ def test_minimal():
     }
     message = GroupEditV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/group/fedora-infra"
+    assert message.url == "http://localhost.localdomain/group/fedora-infra"
 
 
 def test_missing_fields():

@@ -51,11 +51,7 @@ class ProjectNewV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectEditV1(PagureMessage):
@@ -97,11 +93,7 @@ class ProjectEditV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectForkedV1(PagureMessage):
@@ -139,11 +131,7 @@ class ProjectForkedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectDeletedV1(PagureMessage):
@@ -224,11 +212,7 @@ class ProjectGroupAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectGroupRemovedV1(PagureMessage):
@@ -276,11 +260,7 @@ class ProjectGroupRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectGroupAccessUpdatedV1(PagureMessage):
@@ -324,11 +304,7 @@ class ProjectGroupAccessUpdatedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectTagEditedV1(PagureMessage):
@@ -367,11 +343,7 @@ class ProjectTagEditedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectTagRemovedV1(PagureMessage):
@@ -410,11 +382,7 @@ class ProjectTagRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectUserAccessUpdatedV1(PagureMessage):
@@ -458,11 +426,7 @@ class ProjectUserAccessUpdatedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectUserAddedV1(PagureMessage):
@@ -501,11 +465,7 @@ class ProjectUserAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]
 
 
 class ProjectUserRemovedV1(PagureMessage):
@@ -544,8 +504,4 @@ class ProjectUserRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["project"]["full_url"]

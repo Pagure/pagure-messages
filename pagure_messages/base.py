@@ -383,6 +383,7 @@ GROUP = {
         "date_created": {"type": "string"},
         "group_type": {"type": "string"},
         "name": {"type": "string"},
+        "full_url": {"type": "string"},
     },
     "required": [
         "display_name",
@@ -392,6 +393,7 @@ GROUP = {
         "date_created",
         "group_type",
         "name",
+        "full_url",
     ],
 }
 

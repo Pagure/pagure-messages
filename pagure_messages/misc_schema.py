@@ -61,12 +61,12 @@ class CommitFlagAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
+        full_url = self.body["repo"]["full_url"]
         commithash = self.body["flag"]["commit_hash"]
 
-        tmpl = "{base_url}/{fullname}/c/{commithash}"
-        return tmpl.format(base_url=base_url, fullname=fullname, commithash=commithash)
+        return "{full_url}/c/{commithash}".format(
+            full_url=full_url, commithash=commithash
+        )
 
 
 class CommitFlagUpdatedV1(PagureMessage):
@@ -113,12 +113,12 @@ class CommitFlagUpdatedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
+        full_url = self.body["repo"]["full_url"]
         commithash = self.body["flag"]["commit_hash"]
 
-        tmpl = "{base_url}/{fullname}/c/{commithash}"
-        return tmpl.format(base_url=base_url, fullname=fullname, commithash=commithash)
+        return "{full_url}/c/{commithash}".format(
+            full_url=full_url, commithash=commithash
+        )
 
 
 class GroupEditV1(PagureMessage):
@@ -160,11 +160,7 @@ class GroupEditV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        group_name = self.body["group"]["name"]
-
-        tmpl = "{base_url}/group/{group_name}"
-        return tmpl.format(base_url=base_url, group_name=group_name)
+        return self.body["group"]["full_url"]
 
 
 class TestNotificationV1(PagureMessage):

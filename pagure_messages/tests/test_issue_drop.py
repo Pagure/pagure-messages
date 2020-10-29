@@ -35,7 +35,10 @@ def test_minimal():
     }
     message = IssueDropV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/fedora-infra/fedocal-messages/issues"
+    assert (
+        message.url
+        == "http://localhost.localdomain/fedora-infra/fedocal-messages/issues"
+    )
 
 
 def test_missing_fields():

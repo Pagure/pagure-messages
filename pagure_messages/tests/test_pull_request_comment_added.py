@@ -34,7 +34,10 @@ def test_minimal():
     }
     message = PullRequestCommentAddedV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/pagure/pull-request/5014#comment-133905"
+    assert (
+        message.url
+        == "http://localhost.localdomain/pagure/pull-request/5014#comment-133905"
+    )
 
 
 def test_missing_fields():

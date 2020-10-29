@@ -36,7 +36,7 @@ def test_minimal():
     message = CommitFlagAddedV1(body=body)
     message.validate()
     assert (
-        message.url == "https://pagure.io/fedora-infra/fedocal-messages/c/"
+        message.url == "http://localhost.localdomain/fedora-infra/fedocal-messages/c/"
         "36ca6c643221858eda70e2b52a6aee666dc6e576"
     )
 

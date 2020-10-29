@@ -35,10 +35,7 @@ def test_minimal():
     }
     message = PullRequestAssignedResetV1(body=body)
     message.validate()
-    assert (
-        message.url
-        == "https://pagure.io/fedora-infra/fedocal-messages/pull-request/5014"
-    )
+    assert message.url == "http://localhost.localdomain/pagure/pull-request/5014"
 
 
 def test_missing_fields():

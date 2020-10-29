@@ -585,4 +585,5 @@ GROUP = {
     "date_created": "1598094647",
     "group_type": "user",
     "name": "fedora-infra",
+    "full_url": "http://localhost.localdomain/group/fedora-infra",
 }

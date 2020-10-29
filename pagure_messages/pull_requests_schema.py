@@ -58,12 +58,7 @@ class PullRequestAssignedAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestAssignedResetV1(PagureMessage):
@@ -106,12 +101,7 @@ class PullRequestAssignedResetV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestClosedV1(PagureMessage):
@@ -156,12 +146,7 @@ class PullRequestClosedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestCommentAddedV1(PagureMessage):
@@ -203,14 +188,11 @@ class PullRequestCommentAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
+        full_url = self.body["pullrequest"]["full_url"]
         commentid = self.body["pullrequest"]["comments"][-1]["id"]
 
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}#comment-{commentid}"
-        return tmpl.format(
-            base_url=base_url, fullname=fullname, prid=prid, commentid=commentid
+        return "{full_url}#comment-{commentid}".format(
+            full_url=full_url, commentid=commentid
         )
 
 
@@ -253,14 +235,11 @@ class PullRequestCommentEditedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
+        full_url = self.body["pullrequest"]["full_url"]
         commentid = self.body["pullrequest"]["comments"][-1]["id"]
 
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}#comment-{commentid}"
-        return tmpl.format(
-            base_url=base_url, fullname=fullname, prid=prid, commentid=commentid
+        return "{full_url}#comment-{commentid}".format(
+            full_url=full_url, commentid=commentid
         )
 
 
@@ -305,12 +284,7 @@ class PullRequestFlagAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestFlagUpdatedV1(PagureMessage):
@@ -354,12 +328,7 @@ class PullRequestFlagUpdatedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestInitialCommentEditedV1(PagureMessage):
@@ -402,12 +371,7 @@ class PullRequestInitialCommentEditedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestNewV1(PagureMessage):
@@ -450,12 +414,7 @@ class PullRequestNewV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestRebasedV1(PagureMessage):
@@ -497,12 +456,7 @@ class PullRequestRebasedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestReopenedV1(PagureMessage):
@@ -544,12 +498,7 @@ class PullRequestReopenedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestTagAddedV1(PagureMessage):
@@ -594,12 +543,7 @@ class PullRequestTagAddedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestTagRemovedV1(PagureMessage):
@@ -644,12 +588,7 @@ class PullRequestTagRemovedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]
 
 
 class PullRequestUpdatedV1(PagureMessage):
@@ -691,9 +630,4 @@ class PullRequestUpdatedV1(PagureMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["pullrequest"]["project"]["url_path"]
-        prid = self.body["pullrequest"]["id"]
-
-        tmpl = "{base_url}/{fullname}/pull-request/{prid}"
-        return tmpl.format(base_url=base_url, fullname=fullname, prid=prid)
+        return self.body["pullrequest"]["full_url"]

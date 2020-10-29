@@ -35,10 +35,7 @@ def test_minimal():
     }
     message = IssueCommentAddedV1(body=body)
     message.validate()
-    assert (
-        message.url
-        == "https://pagure.io/fedora-infra/fedocal-messages/issue/9311#comment-677717"
-    )
+    assert message.url == "http://localhost.localdomain/test/issue/9311#comment-677717"
 
 
 def test_missing_fields():

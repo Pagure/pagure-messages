@@ -34,7 +34,7 @@ def test_minimal():
     }
     message = ProjectForkedV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/fork/jjames/pagure"
+    assert message.url == "http://localhost.localdomain/fork/jjames/pagure"
 
 
 def test_missing_fields():
