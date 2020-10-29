@@ -39,8 +39,9 @@ BOARD = {
         "active": {"type": "boolean"},
         "status": {"type": ["array", "null"], "items": {"type": "string"}},
         "tag": {"type": TagColored},
+        "full_url": {"type": "string"},
     },
-    "required": ["name", "active", "status", "tag"],
+    "required": ["name", "active", "status", "tag", "full_url"],
 }
 
 
@@ -74,6 +75,7 @@ USER = {
         "name": {"type": "string"},
         "fullname": {"type": "string"},
         "url_path": {"type": "string"},
+        "full_path": {"type": "string"},
     },
     "required": ["name", "fullname", "url_path"],
 }
@@ -176,6 +178,7 @@ PROJECT = {
         "name": {"type": "string"},
         "fullname": {"type": "string"},
         "url_path": {"type": "string"},
+        "full_url": {"type": "string"},
         "description": {"type": "string"},
         "namespace": {"type": ["string", "null"]},
         # "parent": {"type": ["null", BASE_PROJECT]},
@@ -201,6 +204,7 @@ PROJECT = {
     "required": [
         "id",
         "name",
+        "full_url",
         "fullname",
         "url_path",
         "description",
@@ -234,6 +238,7 @@ ISSUE = {
     "type": "object",
     "properties": {
         "id": {"type": "number"},
+        "full_url": {"type": "string"},
         "title": {"type": "string"},
         "content": {"type": "string"},
         "status": {"type": "string"},
@@ -265,6 +270,7 @@ ISSUE = {
     },
     "required": [
         "id",
+        "full_url",
         "title",
         "content",
         "status",
@@ -293,6 +299,7 @@ PULL_REQUEST = {
         "id": {"type": "number"},
         "uid": {"type": "string"},
         "title": {"type": "string"},
+        "full_url": {"type": "string"},
         "branch": {"type": "string"},
         "project": PROJECT,
         "branch_from": {"type": "string"},
@@ -317,6 +324,7 @@ PULL_REQUEST = {
         "id",
         "uid",
         "title",
+        "full_url",
         "branch",
         "project",
         "branch_from",

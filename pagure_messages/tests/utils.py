@@ -19,6 +19,7 @@
 PROJECT = {
     "custom_keys": [],
     "description": "Fedora-messaging schemas for fedocal",
+    "full_url": "http://localhost.localdomain/fedora-infra/fedocal-messages",
     "parent": None,
     "date_modified": "1602658714",
     "access_users": {
@@ -36,6 +37,7 @@ PROJECT = {
     "user": {
         "fullname": "Pierre-YvesChibon",
         "url_path": "user/pingou",
+        "full_url": "http://localhost.localdomain/user/pingou",
         "name": "pingou",
     },
     "date_created": "1602658714",
@@ -49,9 +51,11 @@ PROJECT = {
 FORK = {
     "custom_keys": [],
     "description": "A git centered forge",
+    "full_url": "http://localhost.localdomain/fork/jjames/pagure",
     "parent": {
         "custom_keys": [],
         "description": "A git centered forge",
+        "full_url": "http://localhost.localdomain/pagure",
         "parent": None,
         "date_modified": "1590422384",
         "access_users": {
@@ -102,6 +106,7 @@ FORK = {
         "user": {
             "fullname": "Pierre-YvesChibon",
             "url_path": "user/pingou",
+            "full_url": "http://localhost.localdomain/user/pingou",
             "name": "pingou",
         },
         "date_created": "1431549490",
@@ -138,6 +143,7 @@ FORK = {
     "user": {
         "fullname": "Jerry James",
         "url_path": "user/jjames",
+        "full_url": "http://localhost.localdomain/user/jjames",
         "name": "jjames",
     },
     "date_created": "1602543006",
@@ -215,6 +221,7 @@ ISSUE = {
                     "tag_description": "ops problem now...",
                 },
                 "name": "ops",
+                "full_url": "http://localhost.localdomain/test/boards/ops",
             },
             "rank": 8,
         }
@@ -237,6 +244,7 @@ ISSUE = {
             "user": {
                 "fullname": "Andrei Stepanov",
                 "url_path": "user/astepano",
+                "full_url": "http://localhost.localdomain/user/astepano",
                 "name": "astepano",
             },
         },
@@ -254,6 +262,7 @@ ISSUE = {
             "user": {
                 "fullname": "Kevin Fenzi",
                 "url_path": "user/kevin",
+                "full_url": "http://localhost.localdomain/user/kevin",
                 "name": "kevin",
             },
         },
@@ -270,16 +279,19 @@ ISSUE = {
     "depends": [],
     "private": False,
     "date_created": "1599751343",
+    "full_url": "http://localhost.localdomain/test/issue/9311",
     "id": 9311,
     "closed_at": "1602535496",
     "closed_by": {
         "fullname": "Kevin Fenzi",
         "url_path": "user/kevin",
+        "full_url": "http://localhost.localdomain/user/kevin",
         "name": "kevin",
     },
     "custom_fields": [],
     "user": {
         "fullname": "Andrei Stepanov",
+        "full_url": "http://localhost.localdomain/user/astepano",
         "url_path": "user/astepano",
         "name": "astepano",
     },
@@ -294,6 +306,7 @@ PULL_REQUEST = {
     "commit_stop": "2e8db9ce332cae0747f6b38e414bb99634f9b662",
     "remote_git": None,
     "closed_at": "1602575128",
+    "full_url": "http://localhost.localdomain/pagure/pull-request/5014",
     "id": 5014,
     "title": "Reverse out of order instructions for new repos",
     "comments": [
@@ -313,6 +326,7 @@ PULL_REQUEST = {
             "user": {
                 "fullname": "Pierre-YvesChibon",
                 "url_path": "user/pingou",
+                "full_url": "http://localhost.localdomain/user/pingou",
                 "name": "pingou",
             },
         },
@@ -332,6 +346,7 @@ PULL_REQUEST = {
             "user": {
                 "fullname": "Pierre-YvesChibon",
                 "url_path": "user/pingou",
+                "full_url": "http://localhost.localdomain/user/pingou",
                 "name": "pingou",
             },
         },
@@ -342,12 +357,14 @@ PULL_REQUEST = {
     "user": {
         "fullname": "Jerry James",
         "url_path": "user/jjames",
+        "full_url": "http://localhost.localdomain/user/jjames",
         "name": "jjames",
     },
     "date_created": "1602543367",
     "closed_by": {
         "fullname": "Pierre-YvesChibon",
         "url_path": "user/pingou",
+        "full_url": "http://localhost.localdomain/user/pingou",
         "name": "pingou",
     },
     "branch_from": "master",
@@ -356,6 +373,7 @@ PULL_REQUEST = {
     "project": {
         "custom_keys": [],
         "description": "A git centered forge",
+        "full_url": "http://localhost.localdomain/pagure",
         "parent": None,
         "date_modified": "1590422384",
         "access_users": {
@@ -406,6 +424,7 @@ PULL_REQUEST = {
         "user": {
             "fullname": "Pierre-YvesChibon",
             "url_path": "user/pingou",
+            "full_url": "http://localhost.localdomain/user/pingou",
             "name": "pingou",
         },
         "date_created": "1431549490",
@@ -427,6 +446,7 @@ PULL_REQUEST = {
         "parent": {
             "custom_keys": [],
             "description": "A git centered forge",
+            "full_url": "http://localhost.localdomain/pagure",
             "parent": None,
             "date_modified": "1590422384",
             "access_users": {
@@ -477,6 +497,7 @@ PULL_REQUEST = {
             "user": {
                 "fullname": "Pierre-YvesChibon",
                 "url_path": "user/pingou",
+                "full_url": "http://localhost.localdomain/user/pingou",
                 "name": "pingou",
             },
             "date_created": "1431549490",
@@ -537,14 +558,24 @@ COMMIT_FLAG = {
     "url": "https://jenkins.example.org/job/project/job/project-postmerge/264/",
     "commit_hash": "36ca6c643221858eda70e2b52a6aee666dc6e576",
     "date_created": "1602687207",
-    "user": {"fullname": "foobar", "url_path": "user/foobar", "name": "foobar"},
+    "user": {
+        "fullname": "foobar",
+        "url_path": "user/foobar",
+        "name": "foobar",
+        "full_url": "http://localhost.localdomain/user/foobar",
+    },
 }
 
 
 GROUP = {
     "display_name": "fedora infra folks",
     "description": "Fedora infrastructure team",
-    "creator": {"fullname": "pingou", "url_path": "user/pingou", "name": "pingou"},
+    "creator": {
+        "fullname": "pingou",
+        "url_path": "user/pingou",
+        "name": "pingou",
+        "full_url": "http://localhost.localdomain/user/pingou",
+    },
     "members": [
         "pingou",
         "kevin",
