@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from .base import PROJECT, PULL_REQUEST, PULL_REQUEST_FLAG, PagureMessage, SCHEMA_URL
+from .base import COMMIT_FLAG, PROJECT, PULL_REQUEST, PagureMessage, SCHEMA_URL
 
 
 class PullRequestAssignedAddedV1(PagureMessage):
@@ -280,7 +280,7 @@ class PullRequestFlagAddedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "pullrequest": PULL_REQUEST,
-            "flag": PULL_REQUEST_FLAG,
+            "flag": COMMIT_FLAG,
         },
         "required": ["agent", "pullrequest", "flag"],
     }
@@ -329,7 +329,7 @@ class PullRequestFlagUpdatedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "pullrequest": PULL_REQUEST,
-            "flag": PULL_REQUEST_FLAG,
+            "flag": COMMIT_FLAG,
         },
         "required": ["agent", "pullrequest", "flag"],
     }

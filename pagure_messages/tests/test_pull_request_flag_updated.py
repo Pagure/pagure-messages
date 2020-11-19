@@ -20,7 +20,7 @@ from jsonschema import ValidationError
 
 import pytest
 
-from .utils import PULL_REQUEST, PULL_REQUEST_FLAG
+from .utils import COMMIT_FLAG, PULL_REQUEST
 from ..pull_requests_schema import PullRequestFlagUpdatedV1
 
 
@@ -31,7 +31,7 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "pullrequest": PULL_REQUEST,
-        "flag": PULL_REQUEST_FLAG,
+        "flag": COMMIT_FLAG,
     }
     message = PullRequestFlagUpdatedV1(body=body)
     message.validate()
@@ -42,7 +42,7 @@ def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
         "pullrequest": PULL_REQUEST,
-        "flag": PULL_REQUEST_FLAG,
+        "flag": COMMIT_FLAG,
     }
     message = PullRequestFlagUpdatedV1(body=minimal_message)
     with pytest.raises(ValidationError):
@@ -54,7 +54,7 @@ def test_str():
     body = {
         "agent": "dummy-user",
         "pullrequest": PULL_REQUEST,
-        "flag": PULL_REQUEST_FLAG,
+        "flag": COMMIT_FLAG,
     }
     expected_str = "Pull-request flag updated: jenkins failure\nBy: dummy-user"
     message = PullRequestFlagUpdatedV1(body=body)
@@ -67,7 +67,7 @@ def test_summary():
     body = {
         "agent": "dummy-user",
         "pullrequest": PULL_REQUEST,
-        "flag": PULL_REQUEST_FLAG,
+        "flag": COMMIT_FLAG,
     }
     expected_summary = "jenkins updated flag on pull-request pagure#5014 to failure"
     message = PullRequestFlagUpdatedV1(body=body)

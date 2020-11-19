@@ -390,33 +390,6 @@ GROUP = {
 }
 
 
-PULL_REQUEST_FLAG = {
-    "type": "object",
-    "properties": {
-        "pull_request_uid": {"type": "string"},
-        "username": {"type": "string"},
-        "percent": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-        "comment": {"type": "string"},
-        "status": {"type": "string"},
-        "url": {"type": "string"},
-        "date_created": {"type": "string"},
-        "date_updated": {"type": "string"},
-        "user": USER,
-    },
-    "required": [
-        "pull_request_uid",
-        "username",
-        "percent",
-        "comment",
-        "status",
-        "url",
-        "date_created",
-        "date_updated",
-        "user",
-    ],
-}
-
-
 class PagureMessage(message.Message):
     """
     A sub-class of a Fedora message that defines a message schema for messages

@@ -541,19 +541,6 @@ COMMIT_FLAG = {
 }
 
 
-PULL_REQUEST_FLAG = {
-    "comment": "Build failed.",
-    "status": "failure",
-    "date_updated": "1602688864",
-    "percent": "0",
-    "username": "jenkins",
-    "url": "https://jenkins.example.org/job/project/job/project-postmerge/264/",
-    "pull_request_uid": "36ca6c643221858eda70e2b52a6aee666dc6e576",
-    "date_created": "1602687207",
-    "user": {"fullname": "foobar", "url_path": "user/foobar", "name": "foobar"},
-}
-
-
 GROUP = {
     "display_name": "fedora infra folks",
     "description": "Fedora infrastructure team",
