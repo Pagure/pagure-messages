@@ -345,7 +345,6 @@ COMMIT_FLAG = {
     "properties": {
         "commit_hash": {"type": "string"},
         "username": {"type": "string"},
-        "percent": {"type": "string"},
         "comment": {"type": "string"},
         "status": {"type": "string"},
         "url": {"type": "string"},
@@ -356,7 +355,6 @@ COMMIT_FLAG = {
     "required": [
         "commit_hash",
         "username",
-        "percent",
         "comment",
         "status",
         "url",
