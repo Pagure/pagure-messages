@@ -35,7 +35,7 @@ class GitBranchCreationV1(PagureMessage):
             "repo": PROJECT,
             "tag": {"type": "string"},
             "rev": {"type": "string"},
-            "authors": {"type": "array", "items": {"type": "string"}},
+            "authors": {"type": "array", "items": GIT_RECEIVE_USER},
         },
         "required": ["agent", "repo", "branch", "rev", "authors"],
     }
@@ -87,7 +87,7 @@ class GitBranchDeletionV1(PagureMessage):
             "repo": PROJECT,
             "tag": {"type": "string"},
             "rev": {"type": "string"},
-            "authors": {"type": "array", "items": {"type": "string"}},
+            "authors": {"type": "array", "items": GIT_RECEIVE_USER},
         },
         "required": ["agent", "repo", "branch", "rev", "authors"],
     }
@@ -202,7 +202,7 @@ class GitTagCreationV1(PagureMessage):
             "repo": PROJECT,
             "tag": {"type": "string"},
             "rev": {"type": "string"},
-            "authors": {"type": "array", "items": {"type": "string"}},
+            "authors": {"type": "array", "items": GIT_RECEIVE_USER},
         },
         "required": ["agent", "repo", "tag", "rev", "authors"],
     }
@@ -252,7 +252,7 @@ class GitTagDeletionV1(PagureMessage):
             "repo": PROJECT,
             "tag": {"type": "string"},
             "rev": {"type": "string"},
-            "authors": {"type": "array", "items": {"type": "string"}},
+            "authors": {"type": "array", "items": GIT_RECEIVE_USER},
         },
         "required": ["agent", "repo", "tag", "rev", "authors"],
     }

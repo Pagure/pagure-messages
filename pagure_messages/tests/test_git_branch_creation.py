@@ -33,7 +33,14 @@ def test_minimal():
         "repo": PROJECT,
         "branch": "refs/heads/feature/awesome",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     message = GitBranchCreationV1(body=body)
     message.validate()
@@ -52,7 +59,14 @@ def test_minimal_short_branch():
         "repo": PROJECT,
         "branch": "feature/awesome",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     message = GitBranchCreationV1(body=body)
     message.validate()
@@ -68,7 +82,14 @@ def test_missing_fields():
         "repo": PROJECT,
         "branch": "feature/awesome",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     message = GitBranchCreationV1(body=minimal_message)
     with pytest.raises(ValidationError):
@@ -82,7 +103,14 @@ def test_str():
         "repo": PROJECT,
         "branch": "feature/awesome",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     expected_str = "Git branch: feature/awesome created\nBy: dummy-user"
     message = GitBranchCreationV1(body=body)
@@ -97,7 +125,14 @@ def test_summary():
         "repo": PROJECT,
         "branch": "feature/awesome",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     expected_summary = (
         "dummy-user created the branch feature/awesome on fedora-infra/fedocal-messages"

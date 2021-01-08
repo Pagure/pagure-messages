@@ -33,7 +33,14 @@ def test_minimal():
         "repo": PROJECT,
         "tag": "0.0.1",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     message = GitTagDeletionV1(body=body)
     message.validate()
@@ -46,7 +53,14 @@ def test_missing_fields():
         "repo": PROJECT,
         "tag": "0.0.1",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     message = GitTagDeletionV1(body=minimal_message)
     with pytest.raises(ValidationError):
@@ -60,7 +74,14 @@ def test_str():
         "repo": PROJECT,
         "tag": "0.0.1",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     expected_str = "Git tag: 0.0.1 deleted\nBy: dummy-user"
     message = GitTagDeletionV1(body=body)
@@ -75,7 +96,14 @@ def test_summary():
         "repo": PROJECT,
         "tag": "0.0.1",
         "rev": "hash_commit",
-        "authors": ["dummy-user"],
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
     }
     expected_summary = (
         "dummy-user deleted the tag 0.0.1 of commit hash_commit on "
