@@ -87,9 +87,8 @@ GIT_RECEIVE_USER = {
         "name": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "fullname": {"type": "string"},
         "url_path": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-        "email": {"oneOf": [{"type": "null"}, {"type": "string"}]},
     },
-    "required": ["name", "fullname", "url_path", "email"],
+    "required": ["name", "fullname", "url_path"],
 }
 
 
