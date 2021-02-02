@@ -141,10 +141,10 @@ BASE_PROJECT = {
         # "access_groups": {"type": "string"},
         "tags": {"type": "array", "items": {"type": "string"}},
         # "priorities": {"type": "object"},
-        "custom_keys": {
-            "type": "array",
-            "items": {"type": "array", "items": {"type": "string"}},
-        },
+        # "custom_keys": {
+        #    "type": "array",
+        #    "items": {"type": "array", "items": {"type": "string"}},
+        # },
         "close_status": {"type": "array", "items": {"type": "string"}},
         "milestones": {"type": "object", "properties": {"type": MILESTONES}},
     },
@@ -163,7 +163,7 @@ BASE_PROJECT = {
         # "access_groups",
         "tags",
         # "priorities",
-        "custom_keys",
+        # "custom_keys",
         "close_status",
         "milestones",
     ],
