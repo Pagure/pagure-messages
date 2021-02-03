@@ -317,7 +317,7 @@ PULL_REQUEST = {
         "closed_by": {"oneOf": [{"type": "null"}, USER]},
         "initial_comment": {"oneOf": [{"type": "null"}, {"type": "string"}]},
         "cached_merge_status": {"type": "string"},
-        "threshold_reached": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+        "threshold_reached": {"oneOf": [{"type": "null"}, {"type": "boolean"}]},
         "tags": {"type": "array", "items": {"type": "string"}},
     },
     "required": [
