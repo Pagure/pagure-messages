@@ -143,8 +143,8 @@ BASE_PROJECT = {
         "tags": {"type": "array", "items": {"type": "string"}},
         # "priorities": {"type": "object"},
         # "custom_keys": {
-        #    "type": "array",
-        #    "items": {"type": "array", "items": {"type": "string"}},
+        # "type": "array",
+        # "items": {"type": "array", "items": {"type": "string"}},
         # },
         "close_status": {"type": "array", "items": {"type": "string"}},
         "milestones": {"type": "object", "properties": {"type": MILESTONES}},
@@ -259,10 +259,10 @@ ISSUE = {
                 {"type": "string"},
             ]
         },
-        "custom_fields": {
-            "type": "array",
-            "items": {"type": "array", "items": {"type": "string"}},
-        },
+        # "custom_fields": {
+        # "type": "array",
+        # "items": {"type": "array", "items": {"type": "string"}},
+        # },
         "closed_by": {"oneOf": [{"type": "null"}, USER]},
         "related_prs": {
             "oneOf": [{"type": "null"}, {"type": "array", "items": RELATED_PR}]
@@ -286,7 +286,7 @@ ISSUE = {
         "assignee",
         # "priorities",
         "milestone",
-        "custom_fields",
+        # "custom_fields",
         "closed_by",
         "related_prs",
     ],
