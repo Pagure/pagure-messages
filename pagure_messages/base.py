@@ -414,7 +414,7 @@ class PagureMessage(message.Message):
 
     @property
     def app_name(self):
-        return "pagure"
+        return "Pagure"
 
     @property
     def app_icon(self):

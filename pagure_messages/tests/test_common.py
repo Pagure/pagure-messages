@@ -28,7 +28,7 @@ def test_properties():
     }
     message = ProjectNewV1(body=body)
 
-    assert message.app_name == "pagure"
+    assert message.app_name == "Pagure"
     assert message.app_icon == "https://apps.fedoraproject.org/img/icons/pagure.png"
     assert message.agent == "dummy-user"
     assert message.agent_avatar == (
