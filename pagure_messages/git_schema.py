@@ -17,7 +17,34 @@
 from .base import GIT_RECEIVE_USER, PROJECT, PagureMessage, SCHEMA_URL
 
 
-class GitBranchCreationV1(PagureMessage):
+class GitMessage(PagureMessage):
+    """
+    Used when git events generate Fedora messages.
+    """
+
+    def _name_if_namespace(self, namespace):
+        if self.body["repo"]["namespace"] == namespace:
+            return [self.body["repo"]["name"]]
+        return []
+
+    @property
+    def packages(self):
+        return self._name_if_namespace("rpms")
+
+    @property
+    def containers(self):
+        return self._name_if_namespace("containers")
+
+    @property
+    def modules(self):
+        return self._name_if_namespace("modules")
+
+    @property
+    def flatpaks(self):
+        return self._name_if_namespace("flatpaks")
+
+
+class GitBranchCreationV1(GitMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
@@ -69,7 +96,7 @@ class GitBranchCreationV1(PagureMessage):
         return tmpl.format(base_url=base_url, fullname=fullname, item=item)
 
 
-class GitBranchDeletionV1(PagureMessage):
+class GitBranchDeletionV1(GitMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
@@ -117,7 +144,7 @@ class GitBranchDeletionV1(PagureMessage):
         return tmpl.format(base_url=base_url, fullname=fullname)
 
 
-class GitReceiveV1(PagureMessage):
+class GitReceiveV1(GitMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
@@ -184,7 +211,7 @@ class GitReceiveV1(PagureMessage):
         return tmpl.format(base_url=base_url, fullname=fullname, item=item)
 
 
-class GitTagCreationV1(PagureMessage):
+class GitTagCreationV1(GitMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
@@ -234,7 +261,7 @@ class GitTagCreationV1(PagureMessage):
         return tmpl.format(base_url=base_url, fullname=fullname, tag=tag)
 
 
-class GitTagDeletionV1(PagureMessage):
+class GitTagDeletionV1(GitMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.

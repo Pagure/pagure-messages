@@ -49,6 +49,10 @@ def test_minimal():
     message = GitReceiveV1(body=body)
     message.validate()
     assert message.url == "https://pagure.io/fedora-infra/fedocal-messages/tree/develop"
+    assert message.packages == []
+    assert message.containers == []
+    assert message.modules == []
+    assert message.flatpaks == []
 
 
 def test_minimal_short_branch():
@@ -155,3 +159,42 @@ def test_summary():
     message = GitReceiveV1(body=body)
     message.validate()
     assert expected_summary == message.summary
+
+
+@pytest.mark.parametrize(
+    "namespace,msg_attr",
+    [
+        ("rpms", "packages"),
+        ("containers", "containers"),
+        ("modules", "modules"),
+        ("flatpaks", "flatpaks"),
+    ],
+)
+def test_artifacts(namespace, msg_attr):
+    """
+    Assert the message has the correct artifacts set
+    """
+    body = {
+        "agent": "dummy-user",
+        "forced": False,
+        "repo": PROJECT.copy(),
+        "old_commit": "hash_commit_old",
+        "branch": "refs/heads/develop",
+        "authors": [
+            {
+                "fullname": "dummy-user",
+                "url_path": "user/dummy-user",
+                "name": "dummy-user",
+                "email": None,
+            }
+        ],
+        "total_commits": 42,
+        "start_commit": "hash_commit_start",
+        "end_commit": "hash_commit_stop",
+    }
+    body["repo"]["namespace"] = namespace
+    message = GitReceiveV1(body=body)
+
+    for test_attr in ("packages", "containers", "modules", "flatpaks"):
+        expected = ["fedocal-messages"] if msg_attr == test_attr else []
+        assert getattr(message, test_attr) == expected

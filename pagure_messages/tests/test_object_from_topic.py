@@ -16,20 +16,23 @@
 
 """Unit tests for common properties of the message schemas."""
 
+from .utils import PROJECT
 from .. import get_message_object_from_topic
 
 
 def test_object_type():
     """Assert some properties are correct."""
     cls = get_message_object_from_topic("pagure.git.receive")
-    assert str(type(cls())) == "<class 'pagure_messages.git_schema.GitReceiveV1'>"
+    msg = cls(body={"repo": PROJECT})
+    assert str(type(msg)) == "<class 'pagure_messages.git_schema.GitReceiveV1'>"
 
 
 def test_topic():
     """Assert some properties are correct."""
     cls = get_message_object_from_topic("pagure.git.receive")
+    msg = cls(body={"repo": PROJECT})
 
-    assert cls().topic == "pagure.git.receive"
+    assert msg.topic == "pagure.git.receive"
 
 
 def test_invalidtopic():
