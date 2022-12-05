@@ -422,12 +422,16 @@ class PagureMessage(message.Message):
 
     @property
     def agent(self):
+        return self.agent_name
+
+    @property
+    def agent_name(self):
         return self.body.get("agent")
 
     @property
     def agent_avatar(self):
-        return user_avatar_url(self.agent)
+        return user_avatar_url(self.agent_name)
 
     @property
     def usernames(self):
-        return [self.agent]
+        return [self.agent_name]

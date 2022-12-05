@@ -30,6 +30,7 @@ def test_properties():
 
     assert message.app_name == "Pagure"
     assert message.app_icon == "https://apps.fedoraproject.org/img/icons/pagure.png"
+    assert message.agent_name == "dummy-user"
     assert message.agent == "dummy-user"
     assert message.agent_avatar == (
         "https://seccdn.libravatar.org/avatar/"
