@@ -40,18 +40,18 @@ class IssueAssignedAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} assigned to {assignee}\nBy: {agent}".format(
+        return "Issue: {fullname}#{id} assigned to {assignee}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
             assignee=self.body["issue"]["assignee"]["name"],
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} assigned issue {name}#{id} to {assignee}".format(
-            agent=self.body["agent"],
+        return "{agent_name} assigned issue {name}#{id} to {assignee}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             assignee=self.body["issue"]["assignee"]["name"],
@@ -85,17 +85,17 @@ class IssueAssignedResetV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue un-assigned: {fullname}#{id}\nBy: {agent}".format(
+        return "Issue un-assigned: {fullname}#{id}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} reset the assignee on issue {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} reset the assignee on issue {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
         )
@@ -128,17 +128,17 @@ class IssueCommentAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} has a new comment\nBy: {agent}".format(
+        return "Issue: {fullname}#{id} has a new comment\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} commented on the issue {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} commented on the issue {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
         )
@@ -177,18 +177,20 @@ class IssueDependencyAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} depends on #{depissueid}\nBy: {agent}".format(
-            fullname=self.body["project"]["fullname"],
-            id=self.body["issue"]["id"],
-            agent=self.body["agent"],
-            depissueid=self.body["added_dependency"],
+        return (
+            "Issue: {fullname}#{id} depends on #{depissueid}\nBy: {agent_name}".format(
+                fullname=self.body["project"]["fullname"],
+                id=self.body["issue"]["id"],
+                agent_name=self.agent_name,
+                depissueid=self.body["added_dependency"],
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} set the issue {name}#{id} as depending on #{depissueid}".format(
-            agent=self.body["agent"],
+        return "{agent_name} set the issue {name}#{id} as depending on #{depissueid}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             depissueid=self.body["added_dependency"],
@@ -223,21 +225,31 @@ class IssueDependencyRemovedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} no longer depending on #{depissueid}\nBy: {agent}".format(
-            fullname=self.body["project"]["fullname"],
-            id=self.body["issue"]["id"],
-            agent=self.body["agent"],
-            depissueid=", #".join([str(i) for i in self.body["removed_dependency"]]),
+        return (
+            "Issue: {fullname}#{id} no longer depending"
+            " on #{depissueid}\nBy: {agent_name}".format(
+                fullname=self.body["project"]["fullname"],
+                id=self.body["issue"]["id"],
+                agent_name=self.agent_name,
+                depissueid=", #".join(
+                    [str(i) for i in self.body["removed_dependency"]]
+                ),
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} removed the dependency on #{depissueid} on the issue {name}#{id}".format(
-            agent=self.body["agent"],
-            name=self.body["project"]["fullname"],
-            id=self.body["issue"]["id"],
-            depissueid=", #".join([str(i) for i in self.body["removed_dependency"]]),
+        return (
+            "{agent_name} removed the dependency"
+            " on #{depissueid} on the issue {name}#{id}".format(
+                agent_name=self.agent_name,
+                name=self.body["project"]["fullname"],
+                id=self.body["issue"]["id"],
+                depissueid=", #".join(
+                    [str(i) for i in self.body["removed_dependency"]]
+                ),
+            )
         )
 
     @property
@@ -268,17 +280,17 @@ class IssueDropV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue deleted: {fullname}#{id}\nBy: {agent}".format(
+        return "Issue deleted: {fullname}#{id}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} deleted issue {name}#{id}: {title}".format(
-            agent=self.body["agent"],
+        return "{agent_name} deleted issue {name}#{id}: {title}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             title=self.body["issue"]["title"],
@@ -315,21 +327,23 @@ class IssueEditV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Edited Issue: {fullname}#{id}\nBy: {agent}".format(
+        return "Edited Issue: {fullname}#{id}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} edited fields {fields} of issue {name}#{id}: {title}".format(
-            agent=self.body["agent"],
-            name=self.body["project"]["fullname"],
-            id=self.body["issue"]["id"],
-            title=self.body["issue"]["title"],
-            fields=", ".join(self.body["fields"]),
+        return (
+            "{agent_name} edited fields {fields} of issue {name}#{id}: {title}".format(
+                agent_name=self.agent_name,
+                name=self.body["project"]["fullname"],
+                id=self.body["issue"]["id"],
+                title=self.body["issue"]["title"],
+                fields=", ".join(self.body["fields"]),
+            )
         )
 
     @property
@@ -360,17 +374,17 @@ class IssueNewV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New Issue: {fullname}#{id}\nBy: {agent}".format(
+        return "New Issue: {fullname}#{id}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} created issue {name}#{id}: {title}".format(
-            agent=self.body["agent"],
+        return "{agent_name} created issue {name}#{id}: {title}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             title=self.body["issue"]["title"],
@@ -405,18 +419,18 @@ class IssueTagAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} tagged with {tags}\nBy: {agent}".format(
+        return "Issue: {fullname}#{id} tagged with {tags}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
             tags=", ".join(self.body["tags"]),
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} tagged the issue {name}#{id} with: {tags}".format(
-            agent=self.body["agent"],
+        return "{agent_name} tagged the issue {name}#{id} with: {tags}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             tags=", ".join(self.body["tags"]),
@@ -451,18 +465,18 @@ class IssueTagRemovedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Issue: {fullname}#{id} un-tagged with {tags}\nBy: {agent}".format(
+        return "Issue: {fullname}#{id} un-tagged with {tags}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
             tags=", ".join(self.body["tags"]),
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} removed tags {tags} from issue {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} removed tags {tags} from issue {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
             id=self.body["issue"]["id"],
             tags=", ".join(self.body["tags"]),

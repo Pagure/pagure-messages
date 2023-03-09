@@ -69,16 +69,16 @@ class GitBranchCreationV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Git branch: {branch} created\nBy: {agent}".format(
+        return "Git branch: {branch} created\nBy: {agent_name}".format(
             branch=self.body["branch"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} created the branch {branch} on {name}".format(
-            agent=self.body["agent"],
+        return "{agent_name} created the branch {branch} on {name}".format(
+            agent_name=self.agent_name,
             name=self.body["repo"]["fullname"],
             branch=self.body["branch"],
         )
@@ -120,16 +120,16 @@ class GitBranchDeletionV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Git branch: {branch} deleted\nBy: {agent}".format(
+        return "Git branch: {branch} deleted\nBy: {agent_name}".format(
             branch=self.body["branch"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} deleted the branch {branch} on {name}".format(
-            agent=self.body["agent"],
+        return "{agent_name} deleted the branch {branch} on {name}".format(
+            agent_name=self.agent_name,
             name=self.body["repo"]["fullname"],
             branch=self.body["branch"],
         )
@@ -178,16 +178,16 @@ class GitReceiveV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New commit: {count} commits\nBy: {agent}".format(
+        return "New commit: {count} commits\nBy: {agent_name}".format(
             count=self.body["total_commits"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} pushed {count} commits on {fullname} (branch: {branch})".format(
-            agent=self.body["agent"],
+        return "{agent_name} pushed {count} commits on {fullname} (branch: {branch})".format(
+            agent_name=self.agent_name,
             fullname=self.body["repo"]["fullname"],
             count=self.body["total_commits"],
             branch=self.body["branch"],
@@ -230,16 +230,16 @@ class GitTagCreationV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Git tag: {tag} created\nBy: {agent}".format(
+        return "Git tag: {tag} created\nBy: {agent_name}".format(
             tag=self.body["tag"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} tagged the commit {rev} on {name} as {tag}".format(
-            agent=self.body["agent"],
+        return "{agent_name} tagged the commit {rev} on {name} as {tag}".format(
+            agent_name=self.agent_name,
             name=self.body["repo"]["fullname"],
             tag=self.body["tag"],
             rev=self.body["rev"],
@@ -279,16 +279,16 @@ class GitTagDeletionV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Git tag: {tag} deleted\nBy: {agent}".format(
+        return "Git tag: {tag} deleted\nBy: {agent_name}".format(
             tag=self.body["tag"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} deleted the tag {tag} of commit {rev} on {name}".format(
-            agent=self.body["agent"],
+        return "{agent_name} deleted the tag {tag} of commit {rev} on {name}".format(
+            agent_name=self.agent_name,
             name=self.body["repo"]["fullname"],
             tag=self.body["tag"],
             rev=self.body["rev"],

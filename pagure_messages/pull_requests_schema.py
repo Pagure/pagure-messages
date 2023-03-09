@@ -40,8 +40,8 @@ class PullRequestAssignedAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was assigned\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was assigned\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -52,7 +52,7 @@ class PullRequestAssignedAddedV1(PagureMessage):
         return "{username} assigned the pull-request {name}#{id} to {assignee}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
             assignee=self.body["pullrequest"]["assignee"]["name"],
         )
 
@@ -84,8 +84,8 @@ class PullRequestAssignedResetV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was un-assigned\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was un-assigned\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -96,7 +96,7 @@ class PullRequestAssignedResetV1(PagureMessage):
         return "{username} reset the assignee of the pull-request {name}#{id}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
         )
 
     @property
@@ -127,18 +127,20 @@ class PullRequestClosedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-Request: {fullname}#{id} has been {action}\nBy: {agent}".format(
-            fullname=self.body["pullrequest"]["project"]["fullname"],
-            id=self.body["pullrequest"]["id"],
-            agent=self.body["agent"],
-            action="merged" if self.body["merged"] else "closed without merging",
+        return (
+            "Pull-Request: {fullname}#{id} has been {action}\nBy: {agent_name}".format(
+                fullname=self.body["pullrequest"]["project"]["fullname"],
+                id=self.body["pullrequest"]["id"],
+                agent_name=self.agent_name,
+                action="merged" if self.body["merged"] else "closed without merging",
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} {action} the pull-request {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} {action} the pull-request {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
             action="merged" if self.body["merged"] else "closed without merging",
@@ -171,17 +173,19 @@ class PullRequestCommentAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-Request: {fullname}#{id} has a new comment\nBy: {agent}".format(
-            fullname=self.body["pullrequest"]["project"]["fullname"],
-            id=self.body["pullrequest"]["id"],
-            agent=self.body["agent"],
+        return (
+            "Pull-Request: {fullname}#{id} has a new comment\nBy: {agent_name}".format(
+                fullname=self.body["pullrequest"]["project"]["fullname"],
+                id=self.body["pullrequest"]["id"],
+                agent_name=self.agent_name,
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} commented on the pull-request {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} commented on the pull-request {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -218,17 +222,19 @@ class PullRequestCommentEditedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Edited comment on Pull-Request: {fullname}#{id}\nBy: {agent}".format(
-            fullname=self.body["pullrequest"]["project"]["fullname"],
-            id=self.body["pullrequest"]["id"],
-            agent=self.body["agent"],
+        return (
+            "Edited comment on Pull-Request: {fullname}#{id}\nBy: {agent_name}".format(
+                fullname=self.body["pullrequest"]["project"]["fullname"],
+                id=self.body["pullrequest"]["id"],
+                agent_name=self.agent_name,
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} edited comment on the pull-request {name}#{id}".format(
-            agent=self.body["agent"],
+        return "{agent_name} edited comment on the pull-request {name}#{id}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -266,8 +272,8 @@ class PullRequestFlagAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New pull-request flag: {username} {status}\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "New pull-request flag: {username} {status}\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             username=self.body["flag"]["username"],
             status=self.body["flag"]["status"],
         )
@@ -310,10 +316,12 @@ class PullRequestFlagUpdatedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request flag updated: {username} {status}\nBy: {agent}".format(
-            agent=self.body["agent"],
-            username=self.body["flag"]["username"],
-            status=self.body["flag"]["status"],
+        return (
+            "Pull-request flag updated: {username} {status}\nBy: {agent_name}".format(
+                agent_name=self.agent_name,
+                username=self.body["flag"]["username"],
+                status=self.body["flag"]["status"],
+            )
         )
 
     @property
@@ -354,10 +362,12 @@ class PullRequestInitialCommentEditedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Description of pull-request {name}#{id} edited\nBy: {agent}".format(
-            agent=self.body["agent"],
-            name=self.body["pullrequest"]["project"]["fullname"],
-            id=self.body["pullrequest"]["id"],
+        return (
+            "Description of pull-request {name}#{id} edited\nBy: {agent_name}".format(
+                agent_name=self.agent_name,
+                name=self.body["pullrequest"]["project"]["fullname"],
+                id=self.body["pullrequest"]["id"],
+            )
         )
 
     @property
@@ -366,7 +376,7 @@ class PullRequestInitialCommentEditedV1(PagureMessage):
         return "{username} has edited the description of the pull-request {name}#{id}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
         )
 
     @property
@@ -396,17 +406,17 @@ class PullRequestNewV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New Pull-Request: {fullname}#{id}\nBy: {agent}".format(
+        return "New Pull-Request: {fullname}#{id}\nBy: {agent_name}".format(
             fullname=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} opened a pull-request {fullname}#{id}: {title}".format(
-            agent=self.body["agent"],
+        return "{agent_name} opened a pull-request {fullname}#{id}: {title}".format(
+            agent_name=self.agent_name,
             fullname=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
             title=self.body["pullrequest"]["title"],
@@ -439,8 +449,8 @@ class PullRequestRebasedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was rebased\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was rebased\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -451,7 +461,7 @@ class PullRequestRebasedV1(PagureMessage):
         return "{username} rebased the pull-request {name}#{id}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
         )
 
     @property
@@ -481,8 +491,8 @@ class PullRequestReopenedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was re-opened\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was re-opened\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -493,7 +503,7 @@ class PullRequestReopenedV1(PagureMessage):
         return "{username} re-opened the pull-request {name}#{id}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
         )
 
     @property
@@ -525,8 +535,8 @@ class PullRequestTagAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was tagged\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was tagged\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -537,7 +547,7 @@ class PullRequestTagAddedV1(PagureMessage):
         return "{username} tagged the pull-request {name}#{id} with {tags}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
             tags=", ".join(self.body["tags"]),
         )
 
@@ -570,8 +580,8 @@ class PullRequestTagRemovedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was un-tagged\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was un-tagged\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -582,7 +592,7 @@ class PullRequestTagRemovedV1(PagureMessage):
         return "{username} un-tagged the pull-request {name}#{id} with: {tags}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
             tags=", ".join(self.body["tags"]),
         )
 
@@ -613,8 +623,8 @@ class PullRequestUpdatedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Pull-request {name}#{id} was updated\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Pull-request {name}#{id} was updated\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
         )
@@ -625,7 +635,7 @@ class PullRequestUpdatedV1(PagureMessage):
         return "{username} updated the pull-request {name}#{id}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
-            username=self.body["agent"],
+            username=self.agent_name,
         )
 
     @property

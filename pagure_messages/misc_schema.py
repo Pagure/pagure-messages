@@ -40,8 +40,8 @@ class CommitFlagAddedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New commit flag: {username} {status}\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "New commit flag: {username} {status}\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             username=self.body["flag"]["username"],
             status=self.body["flag"]["status"],
         )
@@ -92,8 +92,8 @@ class CommitFlagUpdatedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New commit flag: {username} {status}\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "New commit flag: {username} {status}\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             username=self.body["flag"]["username"],
             status=self.body["flag"]["status"],
         )
@@ -144,18 +144,20 @@ class GroupEditV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Group edit: {group_name}\nBy: {agent}".format(
-            agent=self.body["agent"],
+        return "Group edit: {group_name}\nBy: {agent_name}".format(
+            agent_name=self.agent_name,
             group_name=self.body["group"]["name"],
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return "{agent} edited the fields {fields} of the group {group_name}".format(
-            agent=self.body["agent"],
-            group_name=self.body["group"]["name"],
-            fields=", ".join(self.body["fields"]),
+        return (
+            "{agent_name} edited the fields {fields} of the group {group_name}".format(
+                agent_name=self.agent_name,
+                group_name=self.body["group"]["name"],
+                fields=", ".join(self.body["fields"]),
+            )
         )
 
     @property

@@ -30,22 +30,25 @@ class ProjectNewV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New Project: {fullname}\nBy: {agent}".format(
+        return "New Project: {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} created project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} created project "{name}"'.format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
         )
 
@@ -77,16 +80,16 @@ class ProjectEditV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Project Edited: {fullname}\nBy: {agent}".format(
+        return "Project Edited: {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} edited the fields {fields} of project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} edited the fields {fields} of project "{name}"'.format(
+            agent_name=self.agent_name,
             fields=", ".join(self.body["fields"]),
             name=self.body["project"]["fullname"],
         )
@@ -109,22 +112,25 @@ class ProjectForkedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Project: {fullname}\nForked by: {agent}".format(
+        return "Project: {fullname}\nForked by: {agent_name}".format(
             fullname=self.body["project"]["parent"]["fullname"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} forked project "{parent}" to {name}'.format(
-            agent=self.body["agent"],
+        return '{agent_name} forked project "{parent}" to {name}'.format(
+            agent_name=self.agent_name,
             parent=self.body["project"]["parent"]["fullname"],
             name=self.body["project"]["fullname"],
         )
@@ -147,22 +153,25 @@ class ProjectDeletedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Project: {fullname}\nDeleted by: {agent}".format(
+        return "Project: {fullname}\nDeleted by: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} deleted project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} deleted project "{name}"'.format(
+            agent_name=self.agent_name,
             name=self.body["project"]["fullname"],
         )
 
@@ -184,26 +193,31 @@ class ProjectGroupAddedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Group: {group} added to {fullname} as {access}\nBy: {agent}".format(
-            fullname=self.body["project"]["fullname"],
-            group=self.body["new_group"],
-            access=self.body["access"],
-            agent=self.body["agent"],
+        return (
+            "Group: {group} added to {fullname} as {access}\nBy: {agent_name}".format(
+                fullname=self.body["project"]["fullname"],
+                group=self.body["new_group"],
+                access=self.body["access"],
+                agent_name=self.agent_name,
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return (
-            '{agent} added the group {group} to the project "{name}" at '
+            '{agent_name} added the group {group} to the project "{name}" at '
             "the {access} level".format(
-                agent=self.body["agent"],
+                agent_name=self.agent_name,
                 group=self.body["new_group"],
                 access=self.body["access"],
                 name=self.body["project"]["fullname"],
@@ -238,20 +252,22 @@ class ProjectGroupRemovedV1(PagureMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Group: {group} removed from {fullname}({access})\nBy: {agent}".format(
-            fullname=self.body["project"]["fullname"],
-            group=self.body["new_group"],
-            access=self.body["access"],
-            agent=self.body["agent"],
+        return (
+            "Group: {group} removed from {fullname}({access})\nBy: {agent_name}".format(
+                fullname=self.body["project"]["fullname"],
+                group=self.body["new_group"],
+                access=self.body["access"],
+                agent_name=self.agent_name,
+            )
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return (
-            "{agent} removed the group {group} (with {access} level)  from the "
+            "{agent_name} removed the group {group} (with {access} level)  from the "
             'project "{name}"'.format(
-                agent=self.body["agent"],
+                agent_name=self.agent_name,
                 group=self.body["new_group"],
                 access=self.body["access"],
                 name=self.body["project"]["fullname"],
@@ -276,26 +292,29 @@ class ProjectGroupAccessUpdatedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Group: {group} access updated to {access} on {fullname}\nBy: {agent}".format(
+        return "Group: {group} access updated to {access} on {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             group=self.body["new_group"],
             access=self.body["new_access"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return (
-            "{agent} updated the access of group {group} to {access} on "
+            "{agent_name} updated the access of group {group} to {access} on "
             'the project "{name}"'.format(
-                agent=self.body["agent"],
+                agent_name=self.agent_name,
                 group=self.body["new_group"],
                 access=self.body["new_access"],
                 name=self.body["project"]["fullname"],
@@ -320,23 +339,26 @@ class ProjectTagEditedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Tag: {tag_name} edited on {fullname}\nBy: {agent}".format(
+        return "Tag: {tag_name} edited on {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             tag_name=self.body["new_tag"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} edited the tag {tag_name} on the project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} edited the tag {tag_name} on the project "{name}"'.format(
+            agent_name=self.agent_name,
             tag_name=self.body["new_tag"],
             name=self.body["project"]["fullname"],
         )
@@ -359,23 +381,26 @@ class ProjectTagRemovedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "Tag(s): {tags} removed from {fullname}\nBy: {agent}".format(
+        return "Tag(s): {tags} removed from {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             tags=", ".join(self.body["tags"]),
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} removed the tag(s) {tags} of project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} removed the tag(s) {tags} of project "{name}"'.format(
+            agent_name=self.agent_name,
             tags=", ".join(self.body["tags"]),
             name=self.body["project"]["fullname"],
         )
@@ -398,26 +423,29 @@ class ProjectUserAccessUpdatedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "User: {user} access edited to {new_access} on {fullname}\nBy: {agent}".format(
+        return "User: {user} access edited to {new_access} on {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             user=self.body["new_user"],
             new_access=self.body["new_access"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return (
-            "{agent} updated the access of {user} to {new_access} on the "
+            "{agent_name} updated the access of {user} to {new_access} on the "
             'project "{name}"'.format(
-                agent=self.body["agent"],
+                agent_name=self.agent_name,
                 user=self.body["new_user"],
                 new_access=self.body["new_access"],
                 name=self.body["project"]["fullname"],
@@ -442,23 +470,26 @@ class ProjectUserAddedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "User: {user} added to {fullname}\nBy: {agent}".format(
+        return "User: {user} added to {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             user=self.body["new_user"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} added the {user} to the project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} added the {user} to the project "{name}"'.format(
+            agent_name=self.agent_name,
             user=self.body["new_user"],
             name=self.body["project"]["fullname"],
         )
@@ -481,23 +512,26 @@ class ProjectUserRemovedV1(PagureMessage):
         "$schema": "http://json-schema.org/draft-04/schema#",
         "description": "Schema for messages sent when a new project is created",
         "type": "object",
-        "properties": {"agent": {"type": "string"}, "project": PROJECT},
+        "properties": {
+            "agent": {"type": "string"},
+            "project": PROJECT,
+        },
         "required": ["agent", "project"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "User: {user} removed from {fullname}\nBy: {agent}".format(
+        return "User: {user} removed from {fullname}\nBy: {agent_name}".format(
             fullname=self.body["project"]["fullname"],
             user=self.body["removed_user"],
-            agent=self.body["agent"],
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
-        return '{agent} removed the {user} from the project "{name}"'.format(
-            agent=self.body["agent"],
+        return '{agent_name} removed the {user} from the project "{name}"'.format(
+            agent_name=self.agent_name,
             user=self.body["removed_user"],
             name=self.body["project"]["fullname"],
         )
