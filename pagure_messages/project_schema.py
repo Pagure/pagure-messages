@@ -168,7 +168,7 @@ class ProjectDeletedV1(PagureMessage):
 
     @property
     def url(self):
-        return self.get_base_url()
+        return self.body["project"]["full_url"]
 
 
 class ProjectGroupAddedV1(PagureMessage):

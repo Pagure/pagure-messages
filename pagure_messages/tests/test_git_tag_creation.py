@@ -45,7 +45,8 @@ def test_minimal():
     message = GitTagCreationV1(body=body)
     message.validate()
     assert (
-        message.url == "https://pagure.io/fedora-infra/fedocal-messages/commits/0.0.1"
+        message.url
+        == "http://localhost.localdomain/fedora-infra/fedocal-messages/commits/0.0.1"
     )
 
 

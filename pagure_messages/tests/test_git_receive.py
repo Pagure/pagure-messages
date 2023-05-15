@@ -48,7 +48,10 @@ def test_minimal():
     }
     message = GitReceiveV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/fedora-infra/fedocal-messages/tree/develop"
+    assert (
+        message.url
+        == "http://localhost.localdomain/fedora-infra/fedocal-messages/tree/develop"
+    )
     assert message.packages == []
     assert message.containers == []
     assert message.modules == []
@@ -79,7 +82,10 @@ def test_minimal_short_branch():
     }
     message = GitReceiveV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/fedora-infra/fedocal-messages/tree/develop"
+    assert (
+        message.url
+        == "http://localhost.localdomain/fedora-infra/fedocal-messages/tree/develop"
+    )
 
 
 def test_missing_fields():

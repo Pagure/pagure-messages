@@ -85,15 +85,14 @@ class GitBranchCreationV1(GitMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
+        base_url = self.body["repo"]["full_url"]
 
         item = self.body["branch"]
         if "refs/heads/" in item:
             item = item.replace("refs/heads/", "")
 
-        tmpl = "{base_url}/{fullname}/tree/{item}"
-        return tmpl.format(base_url=base_url, fullname=fullname, item=item)
+        tmpl = "{base_url}/tree/{item}"
+        return tmpl.format(base_url=base_url, item=item)
 
 
 class GitBranchDeletionV1(GitMessage):
@@ -137,11 +136,7 @@ class GitBranchDeletionV1(GitMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        return self.body["repo"]["full_url"]
 
 
 class GitReceiveV1(GitMessage):
@@ -200,15 +195,14 @@ class GitReceiveV1(GitMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
+        base_url = self.body["repo"]["full_url"]
 
         item = self.body["branch"]
         if "refs/heads/" in item:
             item = item.replace("refs/heads/", "")
 
-        tmpl = "{base_url}/{fullname}/tree/{item}"
-        return tmpl.format(base_url=base_url, fullname=fullname, item=item)
+        tmpl = "{base_url}/tree/{item}"
+        return tmpl.format(base_url=base_url, item=item)
 
 
 class GitTagCreationV1(GitMessage):
@@ -253,12 +247,11 @@ class GitTagCreationV1(GitMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
+        base_url = self.body["repo"]["full_url"]
         tag = self.body["tag"]
 
-        tmpl = "{base_url}/{fullname}/commits/{tag}"
-        return tmpl.format(base_url=base_url, fullname=fullname, tag=tag)
+        tmpl = "{base_url}/commits/{tag}"
+        return tmpl.format(base_url=base_url, tag=tag)
 
 
 class GitTagDeletionV1(GitMessage):
@@ -303,8 +296,6 @@ class GitTagDeletionV1(GitMessage):
 
     @property
     def url(self):
-        base_url = self.get_base_url()
-        fullname = self.body["repo"]["url_path"]
-
-        tmpl = "{base_url}/{fullname}/releases"
-        return tmpl.format(base_url=base_url, fullname=fullname)
+        base_url = self.body["repo"]["full_url"]
+        tmpl = "{base_url}/releases"
+        return tmpl.format(base_url=base_url)

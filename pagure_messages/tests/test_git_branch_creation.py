@@ -45,7 +45,7 @@ def test_minimal():
     message = GitBranchCreationV1(body=body)
     message.validate()
     assert (
-        message.url == "https://pagure.io/fedora-infra/fedocal-messages/"
+        message.url == "http://localhost.localdomain/fedora-infra/fedocal-messages/"
         "tree/feature/awesome"
     )
 
@@ -71,7 +71,7 @@ def test_minimal_short_branch():
     message = GitBranchCreationV1(body=body)
     message.validate()
     assert (
-        message.url == "https://pagure.io/fedora-infra/fedocal-messages/"
+        message.url == "http://localhost.localdomain/fedora-infra/fedocal-messages/"
         "tree/feature/awesome"
     )
 

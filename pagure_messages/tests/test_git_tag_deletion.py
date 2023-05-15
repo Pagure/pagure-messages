@@ -44,7 +44,10 @@ def test_minimal():
     }
     message = GitTagDeletionV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io/fedora-infra/fedocal-messages/releases"
+    assert (
+        message.url
+        == "http://localhost.localdomain/fedora-infra/fedocal-messages/releases"
+    )
 
 
 def test_missing_fields():

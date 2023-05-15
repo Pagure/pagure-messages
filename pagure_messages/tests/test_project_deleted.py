@@ -34,7 +34,7 @@ def test_minimal():
     }
     message = ProjectDeletedV1(body=body)
     message.validate()
-    assert message.url == "https://pagure.io"
+    assert message.url == "http://localhost.localdomain/fedora-infra/fedocal-messages"
 
 
 def test_missing_fields():
