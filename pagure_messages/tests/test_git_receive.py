@@ -24,11 +24,9 @@ from .utils import PROJECT
 from ..git_schema import GitReceiveV1
 
 
-def test_minimal():
-    """
-    Assert the message schema validates a message with the required fields.
-    """
-    body = {
+@pytest.fixture
+def body():
+    return {
         "agent": "dummy-user",
         "forced": False,
         "repo": PROJECT,
@@ -36,43 +34,9 @@ def test_minimal():
         "branch": "refs/heads/develop",
         "authors": [
             {
-                "fullname": "dummy-user",
+                "fullname": "Dummy User",
                 "url_path": "user/dummy-user",
                 "name": "dummy-user",
-                "email": None,
-            }
-        ],
-        "total_commits": 42,
-        "start_commit": "hash_commit_start",
-        "end_commit": "hash_commit_stop",
-    }
-    message = GitReceiveV1(body=body)
-    message.validate()
-    assert (
-        message.url
-        == "http://localhost.localdomain/fedora-infra/fedocal-messages/tree/develop"
-    )
-    assert message.packages == []
-    assert message.containers == []
-    assert message.modules == []
-    assert message.flatpaks == []
-
-
-def test_minimal_short_branch():
-    """
-    Assert the message schema validates a message with the required fields.
-    """
-    body = {
-        "agent": "dummy-user",
-        "forced": False,
-        "repo": PROJECT,
-        "old_commit": "hash_commit_old",
-        "branch": "develop",
-        "authors": [
-            {
-                "fullname": "dummy-user",
-                "url_path": None,
-                "name": None,
                 "email": "dummy-user@example.com",
             }
         ],
@@ -80,84 +44,59 @@ def test_minimal_short_branch():
         "start_commit": "hash_commit_start",
         "end_commit": "hash_commit_stop",
     }
+
+
+def test_minimal(body):
+    """
+    Assert the message schema validates a message with the required fields.
+    """
     message = GitReceiveV1(body=body)
     message.validate()
-    assert (
-        message.url
-        == "http://localhost.localdomain/fedora-infra/fedocal-messages/tree/develop"
+    assert message.url == (
+        "http://localhost.localdomain/fedora-infra/fedocal-messages"
+        "/c/hash_commit_old..hash_commit_stop"
+    )
+    assert message.packages == []
+    assert message.containers == []
+    assert message.modules == []
+    assert message.flatpaks == []
+
+
+def test_minimal_short_branch(body):
+    """
+    Assert the message schema validates a message with the required fields.
+    """
+    body["branch"] = "develop"
+    message = GitReceiveV1(body=body)
+    message.validate()
+    assert message.url == (
+        "http://localhost.localdomain/fedora-infra/fedocal-messages/"
+        "c/hash_commit_old..hash_commit_stop"
     )
 
 
-def test_missing_fields():
+def test_missing_fields(body):
     """Assert an exception is actually raised on validation failure."""
-    minimal_message = {
-        "forced": False,
-        "repo": PROJECT,
-        "old_commit": "hash_commit_old",
-        "branch": "develop",
-        "authors": [
-            {
-                "fullname": "dummy-user",
-                "url_path": "user/dummy-user",
-                "name": "dummy-user",
-                "email": None,
-            }
-        ],
-        "total_commits": 42,
-        "start_commit": "hash_commit_start",
-        "end_commit": "hash_commit_stop",
-    }
-    message = GitReceiveV1(body=minimal_message)
+    del body["agent"]
+    message = GitReceiveV1(body=body)
     with pytest.raises(ValidationError):
         message.validate()
 
 
-def test_str():
+def test_str(body):
     """Assert __str__ produces a human-readable message."""
-    body = {
-        "agent": "dummy-user",
-        "forced": False,
-        "repo": PROJECT,
-        "old_commit": "hash_commit_old",
-        "branch": "develop",
-        "authors": [
-            {
-                "fullname": "dummy-user",
-                "url_path": "user/dummy-user",
-                "name": "dummy-user",
-                "email": None,
-            }
-        ],
-        "total_commits": 42,
-        "start_commit": "hash_commit_start",
-        "end_commit": "hash_commit_stop",
-    }
-    expected_str = "New commit: 42 commits\nBy: dummy-user"
+    expected_str = (
+        "Dummy User (dummy-user) pushed 42 commits on "
+        "fedora-infra/fedocal-messages.\n"
+        "Branch: develop\n"
+    )
     message = GitReceiveV1(body=body)
     message.validate()
     assert expected_str == str(message)
 
 
-def test_summary():
+def test_summary(body):
     """Assert the summary is correct."""
-    body = {
-        "agent": "dummy-user",
-        "forced": False,
-        "repo": PROJECT,
-        "old_commit": "hash_commit_old",
-        "branch": "develop",
-        "authors": [
-            {
-                "fullname": "dummy-user",
-                "url_path": "user/dummy-user",
-                "name": "dummy-user",
-                "email": None,
-            }
-        ],
-        "total_commits": 42,
-        "start_commit": "hash_commit_start",
-        "end_commit": "hash_commit_stop",
-    }
     expected_summary = (
         "dummy-user pushed 42 commits on "
         "fedora-infra/fedocal-messages (branch: develop)"
@@ -165,6 +104,41 @@ def test_summary():
     message = GitReceiveV1(body=body)
     message.validate()
     assert expected_summary == message.summary
+
+
+def test_url_one_commit(body):
+    """
+    Assert the URL is correct when a single commit was received.
+    """
+    body["total_commits"] = 1
+    message = GitReceiveV1(body=body)
+    message.validate()
+    assert message.url == (
+        "http://localhost.localdomain/fedora-infra/fedocal-messages"
+        "/c/hash_commit_stop"
+    )
+
+
+def test_patch_url(body):
+    """
+    Assert the patch URL is correct when a single commit was received.
+    """
+    body["total_commits"] = 1
+    message = GitReceiveV1(body=body)
+    message.validate()
+    assert message.patch_url == (
+        "http://localhost.localdomain/fedora-infra/fedocal-messages"
+        "/c/hash_commit_stop.patch"
+    )
+
+
+def test_patch_url_multiple_commits(body):
+    """
+    Assert the patch URL is correct when a single commit was received.
+    """
+    message = GitReceiveV1(body=body)
+    message.validate()
+    assert message.patch_url is None
 
 
 @pytest.mark.parametrize(

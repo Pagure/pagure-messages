@@ -178,31 +178,50 @@ class GitReceiveV1(GitMessage):
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return "New commit: {count} commits\nBy: {agent_name}".format(
-            count=self.body["total_commits"],
-            agent_name=self.agent_name,
+        author = self.body["authors"][0]
+        force_prefix = "forced-" if self.body["forced"] else ""
+        plural_suffix = "s" if self.body["total_commits"] > 1 else ""
+        branch_short = self.body["branch"].replace("refs/heads/", "")
+        tpl = (
+            "{author[fullname]} ({author[name]}) {force_prefix}pushed {total_commits} "
+            "commit{plural_suffix} on {repo[fullname]}.\n"
+            "Branch: {branch_short}\n"
+        )
+        return tpl.format(
+            **self.body,
+            author=author,
+            force_prefix=force_prefix,
+            plural_suffix=plural_suffix,
+            branch_short=branch_short,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
+        branch = self.body["branch"].replace("refs/heads/", "")
         return "{agent_name} pushed {count} commits on {fullname} (branch: {branch})".format(
             agent_name=self.agent_name,
             fullname=self.body["repo"]["fullname"],
             count=self.body["total_commits"],
-            branch=self.body["branch"],
+            branch=branch,
         )
 
     @property
     def url(self):
-        base_url = self.body["repo"]["full_url"]
+        if self.body["total_commits"] == 1:
+            return "{base_url}/c/{rev}".format(
+                base_url=self.body["repo"]["full_url"], rev=self.body["end_commit"]
+            )
+        else:
+            return "{base_url}/c/{old}..{end}".format(
+                base_url=self.body["repo"]["full_url"],
+                old=self.body["old_commit"],
+                end=self.body["end_commit"],
+            )
 
-        item = self.body["branch"]
-        if "refs/heads/" in item:
-            item = item.replace("refs/heads/", "")
-
-        tmpl = "{base_url}/tree/{item}"
-        return tmpl.format(base_url=base_url, item=item)
+    @property
+    def patch_url(self):
+        return f"{self.url}.patch" if self.body["total_commits"] == 1 else None
 
 
 class GitTagCreationV1(GitMessage):
