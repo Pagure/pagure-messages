@@ -398,6 +398,13 @@ GROUP = {
 }
 
 
+def pretty_list(value):
+    """Return a de-duplicated, sorted, and None-filtered list."""
+    value = list(set(val for val in value if val is not None))
+    value.sort()
+    return value
+
+
 class PagureMessage(message.Message):
     """
     A sub-class of a Fedora message that defines a message schema for messages
@@ -441,3 +448,28 @@ class PagureMessage(message.Message):
     @property
     def usernames(self):
         return [self.agent_name]
+
+
+class IssueOrPullRequestMessage(PagureMessage):
+    """
+    A sub-class of a Fedora message that defines a message schema for messages
+    published by pagure about an issue or a pull request.
+    """
+
+    object_type = None
+
+    @property
+    def url(self):
+        return self.body[self.object_type]["full_url"]
+
+    @property
+    def usernames(self):
+        usernames = [
+            self.agent_name,
+            self.body[self.object_type]["user"]["name"],
+        ]
+        try:
+            usernames.append(self.body[self.object_type]["assignee"]["name"])
+        except (KeyError, TypeError):
+            pass
+        return pretty_list(usernames)

@@ -72,3 +72,25 @@ def test_summary():
     message = PullRequestCommentAddedV1(body=body)
     message.validate()
     assert expected_summary == message.summary
+
+
+def test_usernames():
+    """Assert the usernames is correct."""
+    body = {
+        "agent": "dummy-user",
+        "pullrequest": PULL_REQUEST,
+    }
+    message = PullRequestCommentAddedV1(body=body)
+    message.validate()
+    assert message.usernames == ["dummy-user", "jjames"]
+
+
+def test_usernames_self_reply():
+    """Assert the usernames is correct."""
+    body = {
+        "agent": "jjames",
+        "pullrequest": PULL_REQUEST,
+    }
+    message = PullRequestCommentAddedV1(body=body)
+    message.validate()
+    assert message.usernames == ["jjames"]

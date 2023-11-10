@@ -14,13 +14,23 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from .base import COMMIT_FLAG, PROJECT, PULL_REQUEST, PagureMessage, SCHEMA_URL
+from .base import (
+    COMMIT_FLAG,
+    IssueOrPullRequestMessage,
+    PROJECT,
+    PULL_REQUEST,
+    SCHEMA_URL,
+)
 
 
-class PullRequestAssignedAddedV1(PagureMessage):
+class PullRequestMessage(IssueOrPullRequestMessage):
+    object_type = "pullrequest"
+
+
+class PullRequestAssignedAddedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a pull request is assigned.
     """
 
     topic = "pagure.pull-request.assigned.added"
@@ -28,7 +38,6 @@ class PullRequestAssignedAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -56,15 +65,11 @@ class PullRequestAssignedAddedV1(PagureMessage):
             assignee=self.body["pullrequest"]["assignee"]["name"],
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestAssignedResetV1(PagureMessage):
+class PullRequestAssignedResetV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a pull request is un-assigned.
     """
 
     topic = "pagure.pull-request.assigned.reset"
@@ -72,7 +77,6 @@ class PullRequestAssignedResetV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -99,15 +103,11 @@ class PullRequestAssignedResetV1(PagureMessage):
             username=self.agent_name,
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestClosedV1(PagureMessage):
+class PullRequestClosedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a pull request is closed.
     """
 
     topic = "pagure.pull-request.closed"
@@ -115,7 +115,6 @@ class PullRequestClosedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -146,15 +145,11 @@ class PullRequestClosedV1(PagureMessage):
             action="merged" if self.body["merged"] else "closed without merging",
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestCommentAddedV1(PagureMessage):
+class PullRequestCommentAddedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a comment is added to a PR.
     """
 
     topic = "pagure.pull-request.comment.added"
@@ -162,7 +157,6 @@ class PullRequestCommentAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -200,10 +194,10 @@ class PullRequestCommentAddedV1(PagureMessage):
         )
 
 
-class PullRequestCommentEditedV1(PagureMessage):
+class PullRequestCommentEditedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a comment is edited on a PR.
     """
 
     topic = "pagure.pull-request.comment.edited"
@@ -211,7 +205,6 @@ class PullRequestCommentEditedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -249,10 +242,10 @@ class PullRequestCommentEditedV1(PagureMessage):
         )
 
 
-class PullRequestFlagAddedV1(PagureMessage):
+class PullRequestFlagAddedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a flag is added on a PR.
     """
 
     topic = "pagure.pull-request.flag.added"
@@ -260,7 +253,6 @@ class PullRequestFlagAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -288,15 +280,11 @@ class PullRequestFlagAddedV1(PagureMessage):
             status=self.body["flag"]["status"],
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestFlagUpdatedV1(PagureMessage):
+class PullRequestFlagUpdatedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a flag is updated on a PR
     """
 
     topic = "pagure.pull-request.flag.updated"
@@ -304,7 +292,6 @@ class PullRequestFlagUpdatedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -334,15 +321,11 @@ class PullRequestFlagUpdatedV1(PagureMessage):
             status=self.body["flag"]["status"],
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestInitialCommentEditedV1(PagureMessage):
+class PullRequestInitialCommentEditedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when an initial PR comment is edited.
     """
 
     topic = "pagure.pull-request.initial_comment.edited"
@@ -350,7 +333,6 @@ class PullRequestInitialCommentEditedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -379,15 +361,11 @@ class PullRequestInitialCommentEditedV1(PagureMessage):
             username=self.agent_name,
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestNewV1(PagureMessage):
+class PullRequestNewV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a pull request is created.
     """
 
     topic = "pagure.pull-request.new"
@@ -395,7 +373,6 @@ class PullRequestNewV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -422,15 +399,11 @@ class PullRequestNewV1(PagureMessage):
             title=self.body["pullrequest"]["title"],
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestRebasedV1(PagureMessage):
+class PullRequestRebasedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a PR is rebased.
     """
 
     topic = "pagure.pull-request.rebased"
@@ -438,7 +411,6 @@ class PullRequestRebasedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -464,15 +436,11 @@ class PullRequestRebasedV1(PagureMessage):
             username=self.agent_name,
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestReopenedV1(PagureMessage):
+class PullRequestReopenedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a PR is reopened.
     """
 
     topic = "pagure.pull-request.reopened"
@@ -480,7 +448,6 @@ class PullRequestReopenedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -506,15 +473,11 @@ class PullRequestReopenedV1(PagureMessage):
             username=self.agent_name,
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestTagAddedV1(PagureMessage):
+class PullRequestTagAddedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a tag is added on a PR.
     """
 
     topic = "pagure.pull-request.tag.added"
@@ -522,7 +485,6 @@ class PullRequestTagAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -551,15 +513,11 @@ class PullRequestTagAddedV1(PagureMessage):
             tags=", ".join(self.body["tags"]),
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestTagRemovedV1(PagureMessage):
+class PullRequestTagRemovedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a tag is removed on a PR.
     """
 
     topic = "pagure.pull-request.tag.removed"
@@ -596,15 +554,11 @@ class PullRequestTagRemovedV1(PagureMessage):
             tags=", ".join(self.body["tags"]),
         )
 
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]
 
-
-class PullRequestUpdatedV1(PagureMessage):
+class PullRequestUpdatedV1(PullRequestMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when a new thing is created.
+    published by pagure when a PR is updated.
     """
 
     topic = "pagure.pull-request.updated"
@@ -612,7 +566,6 @@ class PullRequestUpdatedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -637,7 +590,3 @@ class PullRequestUpdatedV1(PagureMessage):
             id=self.body["pullrequest"]["id"],
             username=self.agent_name,
         )
-
-    @property
-    def url(self):
-        return self.body["pullrequest"]["full_url"]

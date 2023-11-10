@@ -14,13 +14,22 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from .base import ISSUE, PROJECT, PagureMessage, SCHEMA_URL
+from .base import (
+    ISSUE,
+    IssueOrPullRequestMessage,
+    PROJECT,
+    SCHEMA_URL,
+)
 
 
-class IssueAssignedAddedV1(PagureMessage):
+class IssueMessage(IssueOrPullRequestMessage):
+    object_type = "issue"
+
+
+class IssueAssignedAddedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when an issue is deleted.
+    published by pagure when an issue is assigned.
     """
 
     topic = "pagure.issue.assigned.added"
@@ -28,7 +37,6 @@ class IssueAssignedAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -57,15 +65,11 @@ class IssueAssignedAddedV1(PagureMessage):
             assignee=self.body["issue"]["assignee"]["name"],
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueAssignedResetV1(PagureMessage):
+class IssueAssignedResetV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when an issue is deleted.
+    published by pagure when an issue is un-assigned.
     """
 
     topic = "pagure.issue.assigned.reset"
@@ -73,7 +77,6 @@ class IssueAssignedResetV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -100,15 +103,11 @@ class IssueAssignedResetV1(PagureMessage):
             id=self.body["issue"]["id"],
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueCommentAddedV1(PagureMessage):
+class IssueCommentAddedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when an issue is deleted.
+    published by pagure when a comment is added to an issue.
     """
 
     topic = "pagure.issue.comment.added"
@@ -116,7 +115,6 @@ class IssueCommentAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -153,10 +151,10 @@ class IssueCommentAddedV1(PagureMessage):
         )
 
 
-class IssueDependencyAddedV1(PagureMessage):
+class IssueDependencyAddedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
-    published by pagure when an issue is deleted.
+    published by pagure when a dependency is added to an issue.
     """
 
     topic = "pagure.issue.dependency.added"
@@ -164,7 +162,6 @@ class IssueDependencyAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -196,12 +193,8 @@ class IssueDependencyAddedV1(PagureMessage):
             depissueid=self.body["added_dependency"],
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueDependencyRemovedV1(PagureMessage):
+class IssueDependencyRemovedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when an issue is deleted.
@@ -212,7 +205,6 @@ class IssueDependencyRemovedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -252,12 +244,8 @@ class IssueDependencyRemovedV1(PagureMessage):
             )
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueDropV1(PagureMessage):
+class IssueDropV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when an issue is deleted.
@@ -268,7 +256,6 @@ class IssueDropV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -303,7 +290,7 @@ class IssueDropV1(PagureMessage):
         return "{full_url}/issues".format(full_url=full_url)
 
 
-class IssueEditV1(PagureMessage):
+class IssueEditV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when an issue is updated.
@@ -314,7 +301,6 @@ class IssueEditV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -346,12 +332,8 @@ class IssueEditV1(PagureMessage):
             )
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueNewV1(PagureMessage):
+class IssueNewV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
@@ -362,7 +344,6 @@ class IssueNewV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -390,12 +371,8 @@ class IssueNewV1(PagureMessage):
             title=self.body["issue"]["title"],
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueTagAddedV1(PagureMessage):
+class IssueTagAddedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when an issue is deleted.
@@ -406,7 +383,6 @@ class IssueTagAddedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -436,12 +412,8 @@ class IssueTagAddedV1(PagureMessage):
             tags=", ".join(self.body["tags"]),
         )
 
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
 
-
-class IssueTagRemovedV1(PagureMessage):
+class IssueTagRemovedV1(IssueMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when an issue is deleted.
@@ -452,7 +424,6 @@ class IssueTagRemovedV1(PagureMessage):
     body_schema = {
         "id": SCHEMA_URL + topic,
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "description": "Schema for messages sent when a new project is created",
         "type": "object",
         "properties": {
             "agent": {"type": "string"},
@@ -481,7 +452,3 @@ class IssueTagRemovedV1(PagureMessage):
             id=self.body["issue"]["id"],
             tags=", ".join(self.body["tags"]),
         )
-
-    @property
-    def url(self):
-        return self.body["issue"]["full_url"]
