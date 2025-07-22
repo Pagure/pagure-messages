@@ -234,12 +234,12 @@ class PullRequestCommentEditedV1(PullRequestMessage):
 
     @property
     def url(self):
-        full_url = self.body["pullrequest"]["full_url"]
-        commentid = self.body["pullrequest"]["comments"][-1]["id"]
-
-        return "{full_url}#comment-{commentid}".format(
-            full_url=full_url, commentid=commentid
-        )
+        url = self.body["pullrequest"]["full_url"]
+        comments = self.body["pullrequest"]["comments"]
+        if comments:
+            commentid = self.body["pullrequest"]["comments"][-1]["id"]
+            url = f"{url}#comment-{commentid}"
+        return url
 
 
 class PullRequestFlagAddedV1(PullRequestMessage):

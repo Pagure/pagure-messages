@@ -16,6 +16,8 @@
 
 """Unit tests for the message schema."""
 
+from copy import deepcopy
+
 from jsonschema import ValidationError
 
 import pytest
@@ -72,3 +74,15 @@ def test_summary():
     message = PullRequestCommentEditedV1(body=body)
     message.validate()
     assert expected_summary == message.summary
+
+
+def test_no_comment():
+    """Assert the url attribute works if the edited comment is the first one (the description)."""
+    body = {
+        "agent": "dummy-user",
+        "pullrequest": deepcopy(PULL_REQUEST),
+    }
+    body["pullrequest"]["comments"] = []
+    message = PullRequestCommentEditedV1(body=body)
+    message.validate()
+    assert message.url == "http://localhost.localdomain/pagure/pull-request/5014"
