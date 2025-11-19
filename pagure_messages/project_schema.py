@@ -184,6 +184,8 @@ class ProjectGroupAddedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=d9d4483c-f1a2-4d51-89ac-a3345802f929&is_raw=true&size=extra-large
     """
 
     topic = "pagure.project.group.added"
@@ -196,8 +198,11 @@ class ProjectGroupAddedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "new_group": {"type": "string"},
+            "access": {"type": "string"},
+            "branches": {"type": ["string", "null"]},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "new_group", "access", "branches"],
     }
 
     def __str__(self):
@@ -233,6 +238,8 @@ class ProjectGroupRemovedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=bd1fdfe6-f64e-436b-a148-14043651d511&is_raw=true&size=extra-large
     """
 
     topic = "pagure.project.group.removed"
@@ -247,29 +254,25 @@ class ProjectGroupRemovedV1(PagureMessage):
             "project": PROJECT,
             "removed_groups": {"type": "array", "items": {"type": "string"}},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "removed_groups"],
     }
 
     def __str__(self):
         """Return a complete human-readable representation of the message."""
-        return (
-            "Group: {group} removed from {fullname}({access})\nBy: {agent_name}".format(
-                fullname=self.body["project"]["fullname"],
-                group=self.body["new_group"],
-                access=self.body["access"],
-                agent_name=self.agent_name,
-            )
+        return "Group(s) {groups} removed from {fullname}\nBy: {agent_name}".format(
+            fullname=self.body["project"]["fullname"],
+            groups=", ".join(self.body["removed_groups"]),
+            agent_name=self.agent_name,
         )
 
     @property
     def summary(self):
         """Return a summary of the message."""
         return (
-            "{agent_name} removed the group {group} (with {access} level)  from the "
+            "{agent_name} removed the group(s) {groups} from the "
             'project "{name}"'.format(
                 agent_name=self.agent_name,
-                group=self.body["new_group"],
-                access=self.body["access"],
+                groups=", ".join(self.body["removed_groups"]),
                 name=self.body["project"]["fullname"],
             )
         )
@@ -283,6 +286,8 @@ class ProjectGroupAccessUpdatedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=4bd92c2d-59a3-4e4d-b4c6-eaa4f504cff0&is_raw=true&size=extra-large
     """
 
     topic = "pagure.project.group.access.updated"
@@ -295,8 +300,11 @@ class ProjectGroupAccessUpdatedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "new_group": {"type": "string"},
+            "new_access": {"type": "string"},
+            "branches": {"type": ["string", "null"]},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "new_group", "new_access", "branches"],
     }
 
     def __str__(self):
@@ -342,8 +350,23 @@ class ProjectTagEditedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "old_tag": {"type": "string"},
+            "old_tag_description": {"type": "string"},
+            "old_tag_color": {"type": "string"},
+            "new_tag": {"type": "string"},
+            "new_tag_description": {"type": "string"},
+            "new_tag_color": {"type": "string"},
         },
-        "required": ["agent", "project"],
+        "required": [
+            "agent",
+            "project",
+            "old_tag",
+            "old_tag_description",
+            "old_tag_color",
+            "new_tag",
+            "new_tag_description",
+            "new_tag_color",
+        ],
     }
 
     def __str__(self):
@@ -384,8 +407,9 @@ class ProjectTagRemovedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "tags": {"type": "array", "items": {"type": "string"}},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "tags"],
     }
 
     def __str__(self):
@@ -414,6 +438,8 @@ class ProjectUserAccessUpdatedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=ab665d5b-766e-4521-960c-b30d9f223011&is_raw=true&size=extra-large
     """
 
     topic = "pagure.project.user.access.updated"
@@ -426,8 +452,11 @@ class ProjectUserAccessUpdatedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "new_user": {"type": "string"},
+            "new_access": {"type": "string"},
+            "new_branches": {"type": ["string", "null"]},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "new_user", "new_access", "new_branches"],
     }
 
     def __str__(self):
@@ -461,6 +490,8 @@ class ProjectUserAddedV1(PagureMessage):
     """
     A sub-class of a Fedora message that defines a message schema for messages
     published by pagure when a new thing is created.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=4323d2ff-2cdc-462f-b775-51d3a7fb68e9&is_raw=true&size=extra-large
     """
 
     topic = "pagure.project.user.added"
@@ -473,8 +504,11 @@ class ProjectUserAddedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "new_user": {"type": "string"},
+            "access": {"type": "string"},
+            "branches": {"type": ["string", "null"]},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "new_user", "access", "branches"],
     }
 
     def __str__(self):
@@ -515,8 +549,9 @@ class ProjectUserRemovedV1(PagureMessage):
         "properties": {
             "agent": {"type": "string"},
             "project": PROJECT,
+            "removed_user": {"type": "string"},
         },
-        "required": ["agent", "project"],
+        "required": ["agent", "project", "removed_user"],
     }
 
     def __str__(self):

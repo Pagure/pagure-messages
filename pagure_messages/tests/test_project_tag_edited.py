@@ -31,6 +31,12 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "new_tag": "testing",
+        "new_tag_description": "testing desc",
+        "new_tag_color": "testing color",
+        "old_tag": "testing old",
+        "old_tag_description": "testing old desc",
+        "old_tag_color": "testing old color",
     }
     message = ProjectTagEditedV1(body=body)
     message.validate()
@@ -40,6 +46,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectTagEditedV1(body=minimal_message)
@@ -53,6 +60,11 @@ def test_str():
         "agent": "dummy-user",
         "project": PROJECT,
         "new_tag": "testing",
+        "new_tag_description": "testing desc",
+        "new_tag_color": "testing color",
+        "old_tag": "testing old",
+        "old_tag_description": "testing old desc",
+        "old_tag_color": "testing old color",
     }
     expected_str = (
         "Tag: testing edited on fedora-infra/fedocal-messages\nBy: dummy-user"
@@ -68,6 +80,11 @@ def test_summary():
         "agent": "dummy-user",
         "project": PROJECT,
         "new_tag": "testing",
+        "new_tag_description": "testing desc",
+        "new_tag_color": "testing color",
+        "old_tag": "testing old",
+        "old_tag_description": "testing old desc",
+        "old_tag_color": "testing old color",
     }
     expected_summary = (
         "dummy-user edited the tag testing on the project "

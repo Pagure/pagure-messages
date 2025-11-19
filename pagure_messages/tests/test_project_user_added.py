@@ -31,6 +31,9 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "new_user": "newu",
+        "access": "admin",
+        "branches": None,
     }
     message = ProjectUserAddedV1(body=body)
     message.validate()
@@ -40,6 +43,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectUserAddedV1(body=minimal_message)
@@ -53,6 +57,8 @@ def test_str():
         "agent": "dummy-user",
         "project": PROJECT,
         "new_user": "newu",
+        "access": "admin",
+        "branches": None,
     }
     expected_str = "User: newu added to fedora-infra/fedocal-messages\nBy: dummy-user"
     message = ProjectUserAddedV1(body=body)
@@ -66,6 +72,8 @@ def test_summary():
         "agent": "dummy-user",
         "project": PROJECT,
         "new_user": "newu",
+        "access": "admin",
+        "branches": None,
     }
     expected_summary = (
         'dummy-user added the newu to the project "fedora-infra/fedocal-messages"'

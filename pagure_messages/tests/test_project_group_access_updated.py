@@ -31,6 +31,9 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "new_group": "dummy-group",
+        "new_access": "commit",
+        "branches": None,
     }
     message = ProjectGroupAccessUpdatedV1(body=body)
     message.validate()
@@ -40,6 +43,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectGroupAccessUpdatedV1(body=minimal_message)
@@ -54,6 +58,7 @@ def test_str():
         "project": PROJECT,
         "new_group": "dummy-group",
         "new_access": "commit",
+        "branches": None,
     }
     expected_str = (
         "Group: dummy-group access updated to commit on "
@@ -71,6 +76,7 @@ def test_summary():
         "project": PROJECT,
         "new_group": "dummy-group",
         "new_access": "commit",
+        "branches": None,
     }
     expected_summary = (
         "dummy-user updated the access of group dummy-group to "

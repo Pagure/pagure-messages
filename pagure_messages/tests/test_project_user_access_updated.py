@@ -31,6 +31,9 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "new_user": "newu",
+        "new_access": "commit",
+        "new_branches": None,
     }
     message = ProjectUserAccessUpdatedV1(body=body)
     message.validate()
@@ -40,6 +43,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectUserAccessUpdatedV1(body=minimal_message)
@@ -54,6 +58,7 @@ def test_str():
         "project": PROJECT,
         "new_user": "newu",
         "new_access": "commit",
+        "new_branches": None,
     }
     expected_str = (
         "User: newu access edited to commit on "
@@ -71,6 +76,7 @@ def test_summary():
         "project": PROJECT,
         "new_user": "newu",
         "new_access": "commit",
+        "new_branches": None,
     }
     expected_summary = (
         "dummy-user updated the access of newu to commit on "

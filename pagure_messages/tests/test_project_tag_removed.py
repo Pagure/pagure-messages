@@ -31,6 +31,7 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "tags": ["testing"],
     }
     message = ProjectTagRemovedV1(body=body)
     message.validate()
@@ -40,6 +41,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectTagRemovedV1(body=minimal_message)

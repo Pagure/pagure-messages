@@ -31,6 +31,7 @@ def test_minimal():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
+        "removed_groups": ["dummy-group"],
     }
     message = ProjectGroupRemovedV1(body=body)
     message.validate()
@@ -40,6 +41,7 @@ def test_minimal():
 def test_missing_fields():
     """Assert an exception is actually raised on validation failure."""
     minimal_message = {
+        "agent": "dummy-user",
         "project": PROJECT,
     }
     message = ProjectGroupRemovedV1(body=minimal_message)
@@ -52,11 +54,10 @@ def test_str():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
-        "new_group": "dummy-group",
-        "access": "commit",
+        "removed_groups": ["dummy-group"],
     }
     expected_str = (
-        "Group: dummy-group removed from fedora-infra/fedocal-messages(commit)"
+        "Group(s) dummy-group removed from fedora-infra/fedocal-messages"
         "\nBy: dummy-user"
     )
     message = ProjectGroupRemovedV1(body=body)
@@ -69,11 +70,10 @@ def test_summary():
     body = {
         "agent": "dummy-user",
         "project": PROJECT,
-        "new_group": "dummy-group",
-        "access": "commit",
+        "removed_groups": ["dummy-group"],
     }
     expected_summary = (
-        "dummy-user removed the group dummy-group (with commit level)  from "
+        "dummy-user removed the group(s) dummy-group from "
         'the project "fedora-infra/fedocal-messages"'
     )
     message = ProjectGroupRemovedV1(body=body)
