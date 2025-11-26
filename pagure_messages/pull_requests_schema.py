@@ -58,11 +58,12 @@ class PullRequestAssignedAddedV1(PullRequestMessage):
     @property
     def summary(self):
         """Return a summary of the message."""
+        assignee = self.body["pullrequest"]["assignee"]
         return "{username} assigned the pull-request {name}#{id} to {assignee}".format(
             name=self.body["pullrequest"]["project"]["fullname"],
             id=self.body["pullrequest"]["id"],
             username=self.agent_name,
-            assignee=self.body["pullrequest"]["assignee"]["name"],
+            assignee=assignee["name"] if assignee else "someone",
         )
 
 

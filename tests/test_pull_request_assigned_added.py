@@ -80,3 +80,23 @@ def test_summary():
     message = PullRequestAssignedAddedV1(body=body)
     message.validate()
     assert expected_summary == message.summary
+
+
+def test_summary_no_assignee():
+    """Assert the summary is correct when there is no assignee.
+
+    Not sure how that can happen but it does.
+
+    Example: https://apps.fedoraproject.org/datagrepper/v2/id?id=9105f582-3eb2-4e3f-9317-df1b19599a69&is_raw=true&size=extra-large
+    """
+    request = PULL_REQUEST.copy()
+    request["assignee"] = None
+    body = {
+        "agent": "dummy-user",
+        "pullrequest": request,
+        "project": PROJECT,
+    }
+    expected_summary = "dummy-user assigned the pull-request pagure#5014 to someone"
+    message = PullRequestAssignedAddedV1(body=body)
+    message.validate()
+    assert expected_summary == message.summary
