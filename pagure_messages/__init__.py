@@ -14,10 +14,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+
+import importlib.metadata
+import platform
+
 from fedora_messaging import message
-
-import pkg_resources
-
 
 from .git_schema import (  # noqa: F401
     GitBranchCreationV1,
@@ -81,7 +82,13 @@ def get_message_object_from_topic(topic):
 
     output = None
 
-    for entry_point in pkg_resources.iter_entry_points("fedora.messages"):
+    if tuple(int(v) for v in platform.python_version_tuple()[:2]) < (3, 10):
+        eps = importlib.metadata.entry_points()["fedora.messages"]  # pragma: no cover
+    else:
+        eps = importlib.metadata.entry_points(
+            group="fedora.messages"
+        )  # pragma: no cover
+    for entry_point in eps:
         cls = entry_point.load()
         if cls.topic == topic:
             output = cls
