@@ -304,7 +304,7 @@ class ProjectGroupAccessUpdatedV1(PagureMessage):
             "new_access": {"type": "string"},
             "branches": {"type": ["string", "null"]},
         },
-        "required": ["agent", "project", "new_group", "new_access", "branches"],
+        "required": ["agent", "project", "new_group", "new_access"],
     }
 
     def __str__(self):
