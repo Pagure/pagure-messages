@@ -18,7 +18,6 @@ import warnings
 from fedora_messaging import message
 from fedora_messaging.schema_utils import user_avatar_url
 
-
 SCHEMA_URL = "http://fedoraproject.org/message-schema/"
 
 

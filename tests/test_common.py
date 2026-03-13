@@ -15,6 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 """Unit tests for common properties of the message schemas."""
+
 import pytest
 
 from pagure_messages.project_schema import ProjectNewV1
